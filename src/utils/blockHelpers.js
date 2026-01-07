@@ -1,7 +1,3 @@
-import { CANVAS_CONFIG } from '../constants';
-
-const { WIDTH, HEIGHT } = CANVAS_CONFIG;
-
 /**
  * Create a new block with the specified file name and size
  * @param {string} fileName - The image file name

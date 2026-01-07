@@ -1,6 +1,5 @@
 import React from 'react';
 import PageList from './PageList';
-import LibrarySection from './LibrarySection';
 import SectionTitle from './SectionTitle';
 import LibraryBtn from './LibraryBtn';
 import ButtonGroup from './ButtonGroup';
