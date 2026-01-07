@@ -1,6 +1,6 @@
 export const LIBRARY_ITEMS = {
   backgrounds: [
-    { id: 'backgroundwithtabs. png', label: 'Standard' },
+    { id: 'backgroundwithtabs.png', label: 'Standard' },
     { id: 'glitter.png', label: 'Glitter' },
     { id: 'mermaid.png', label: 'Mermaid' },
     { id: 'earthtones.png', label: 'Neutral' },
@@ -48,7 +48,7 @@ export const LIBRARY_ITEMS = {
   halfPage: [
     { id: 'monselfcare.svg', label: 'Monday Week Start Self-Care Tracker' },
     { id: 'sunselfcare.svg', label: 'Sunday Week Start Self-Care Tracker' },
-    { id:  'prioritytemplate.svg.svg', label: 'Priority Planner' },
+    { id: 'prioritytemplate.svg', label: 'Priority Planner' },
     { id: 'monstartweek.svg', label: 'Monday Week Start  Schedule' },
     { id: 'sunstartweek.svg', label: 'Sunday Week Start Schedule' },
   ],
