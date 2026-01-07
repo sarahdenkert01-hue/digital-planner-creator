@@ -193,12 +193,20 @@ OR
 
 ## Technologies
 - React 18.2.0
-- Vite 5.0.8
+- Vite 6.4.1 (updated for security)
 - React Konva 18.2.10
 - Konva 9.2.0
-- jsPDF 2.5.1
+- jsPDF 4.0.0 (updated for security - patches all known vulnerabilities)
 - pdf-lib 1.17.1
 - ESLint 8.55.0
+
+## Security Updates
+- ✅ **jsPDF updated from 2.5.1 to 4.0.0** - Fixes:
+  - CVE: Denial of Service (DoS) vulnerability
+  - CVE: Regular Expression Denial of Service (ReDoS)
+  - CVE: Local File Inclusion/Path Traversal vulnerability
+- ✅ **Vite updated from 5.0.8 to 6.4.1** - Fixes esbuild security issues
+- ✅ **Zero vulnerabilities** - Confirmed by npm audit
 
 ## Conclusion
 This project is **complete, tested, and production-ready**. All requirements from the problem statement have been met. The application can be deployed to Netlify immediately with full functionality.

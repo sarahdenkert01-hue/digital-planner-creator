@@ -196,10 +196,10 @@ npm run lint      # Run ESLint on source files
 ## Technologies
 
 - **React 18** - Modern UI framework with hooks
-- **Vite 5** - Lightning-fast build tool and dev server
+- **Vite 6** - Lightning-fast build tool and dev server
 - **React Konva** - Canvas manipulation and drag-and-drop
 - **Konva 9** - High-performance 2D canvas library
-- **jsPDF** - Client-side PDF generation
+- **jsPDF 4** - Client-side PDF generation (latest secure version)
 - **pdf-lib** - PDF manipulation and merging
 - **use-image** - React hook for image loading
 
