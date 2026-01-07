@@ -1,6 +1,6 @@
-zimport React from 'react';
+import React from 'react';
 
-export default function LibraryBtn({ onClick, children }) {
+export default function LibraryBtn({ onClick, label }) {
   return (
     <button
       onClick={onClick}
@@ -15,7 +15,7 @@ export default function LibraryBtn({ onClick, children }) {
         marginBottom: '2px'
       }}
     >
-      {children}
+      {label}
     </button>
   );
 }
