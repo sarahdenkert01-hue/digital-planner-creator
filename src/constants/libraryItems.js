@@ -1,6 +1,6 @@
 export const LIBRARY_ITEMS = {
   backgrounds: [
-    { id: 'backgroundwithtabs. png', label: 'Standard' },
+    { id: 'backgroundwithtabs.png', label: 'Standard' },
     { id: 'glitter.png', label: 'Glitter' },
     { id: 'mermaid.png', label: 'Mermaid' },
     { id: 'earthtones.png', label: 'Neutral' },
