@@ -173,7 +173,7 @@ export default function Sidebar({
         {MONTH_NAMES.map(m => (
           <button
             key={m}
-            onClick={() => onAddBlock(`${m}${startDay}start.png`)}
+            onClick={() => onAddBlock(`${m}${startDay}start.svg`)}
             style={{
               padding: '10px',
               background: '#fff',
