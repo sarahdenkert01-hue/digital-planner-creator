@@ -24,7 +24,7 @@ export function clearMonthCache() {
  * @returns {string|null} Month name or null
  */
 export function getMonthNameFromPage(page) {
-  const monthMatch = page.name. match(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i);
+  const monthMatch = page.name.match(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i);
   return monthMatch ? monthMatch[0]. toUpperCase() : null;
 }
 
