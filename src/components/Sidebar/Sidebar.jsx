@@ -123,18 +123,12 @@ export default function Sidebar({
       
       {/* Headers Section */}
       <SectionTitle>Headers</SectionTitle>
-      <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg")}>
-        Sunday Start Weekday Header
+      <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg", "weekheader")}>
+      Sunday Start Weekday Header
       </LibraryBtn>
-      <LibraryBtn onClick={() => onAddBlock("monstartheader.svg")}>
-        Monday Start Weekday Header
+      <LibraryBtn onClick={() => onAddBlock("monstartheader.svg", "weekheader")}>
+      Monday Start Weekday Header
       </LibraryBtn>
-      <div style={{
-        display: "grid",
-        gridTemplateColumns:  "repeat(4, 1fr)",
-        gap: "2px",
-        marginTop: '5px'
-      }}>
         {MONTH_NAMES.map(m => (
           <button
             key={m}
