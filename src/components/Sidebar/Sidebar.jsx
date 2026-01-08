@@ -119,8 +119,8 @@ export default function Sidebar({
 
       {/* Planner Covers */}
       <SectionTitle>Planner Cover</SectionTitle>
-      <ButtonGroup items={LIBRARY_ITEMS.covers} onClick={onAddBlock} />
-
+      <ButtonGroup items={LIBRARY_ITEMS.covers} onClick={(id) => onAddBlock(id, "cover")} />
+      
       {/* Headers Section */}
       <SectionTitle>Headers</SectionTitle>
       <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg")}>
