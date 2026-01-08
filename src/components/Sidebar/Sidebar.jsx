@@ -164,24 +164,24 @@ export default function Sidebar({
         </button>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
-        {MONTH_NAMES.map(m => (
-          <button
-            key={m}
-            onClick={() => onAddBlock(`${m}${startDay}start.svg`)}
-            style={{
-              padding: '10px',
-              background: '#fff',
-              border: '1px solid #e2e8f0',
-              cursor: 'pointer',
-              fontSize: '11px',
-              borderRadius: '4px',
-              textAlign: 'center'
-            }}
-          >
-            {m.toUpperCase()}
-          </button>
-        ))}
-      </div>
+      {MONTH_NAMES.map(m => (
+        <button
+          key={m}
+          onClick={() => onAddBlock(`${m}${startDay}start.svg`, "calendar")}
+          style={{
+           padding: '10px',
+           background: '#fff',
+           border: '1px solid #e2e8f0',
+           cursor: 'pointer',
+           fontSize: '11px',
+           borderRadius: '4px',
+           textAlign: 'center'
+          }}
+        >
+         {m.toUpperCase()}
+        </button>
+         ))}
+       </div>
 
       {/* Full Page Templates */}
       <SectionTitle>Full Page Templates</SectionTitle>
