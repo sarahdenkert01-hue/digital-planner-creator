@@ -18,7 +18,8 @@ export function createBlock(fileName, size = "full") {
     half: { width: 1167, height: 900, x: 225, y:  125 },
     quarter:  { width: 583, height: 900, x:  225, y: 125 },
     "1/8": { width: 583, height: 450, x: 225, y:  125 },
-    header: { width: 1167, height: 250, x: 225, y:  125 }
+    header: { width: 1167, height: 250, x: 225, y:  125 },
+    cover: { width: 1620, height: 2160, x: 0, y:  0 }
   };
   
   const { width, height, x, y } = dimensions[size] || dimensions.full;
