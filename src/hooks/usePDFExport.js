@@ -1,7 +1,8 @@
 import { useState, useCallback, useRef } from 'react';
 import jsPDF from 'jspdf';
-import { CANVAS_CONFIG, PDF_EXPORT_CONFIG } from '../constants';
+import { CANVAS_CONFIG } from '../constants';
 import {
+  PDF_EXPORT_CONFIG,
   addMonthTabLinks,
   addCalendarGridLinks,
   clearMonthCache,
@@ -62,11 +63,11 @@ export function usePDFExport({ pages, stageRef, lastRenderedPageRef, setCurrentP
           });
 
           // Cache with block hash
-          renderCache.set(pages[idx]. id, rendered, pages[idx]. blocks);
+          renderCache.set(pages[idx].id, rendered, pages[idx].blocks);
           return rendered;
         },
         (percent) => {
-          if (! exportCancelRef.current) {
+          if (!  exportCancelRef.current) {
             setExportProgress(percent);
           }
         },
@@ -75,7 +76,7 @@ export function usePDFExport({ pages, stageRef, lastRenderedPageRef, setCurrentP
         if (exportCancelRef.current) break;
 
         // Add page to PDF
-        if (addedPages > 0) pdf.addPage([WIDTH, HEIGHT], "p");
+        if (addedPages > 0) pdf. addPage([WIDTH, HEIGHT], "p");
         pdf.addImage(dataUrl, "JPEG", 0, 0, WIDTH, HEIGHT, undefined, PDF_EXPORT_CONFIG.compression);
 
         // Add interactive links
@@ -93,7 +94,7 @@ export function usePDFExport({ pages, stageRef, lastRenderedPageRef, setCurrentP
         setExportProgress(Math.round(((index + 1) / pages.length) * 100));
       }
 
-      if (! exportCancelRef.current) {
+      if (!  exportCancelRef.current) {
         pdf.save("Therapist_Planner_Batch.pdf");
         alert("✅ Export complete! PDF ready to download.");
       }
