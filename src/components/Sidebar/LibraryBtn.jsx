@@ -1,4 +1,4 @@
-zimport React from 'react';
+import React from 'react';
 
 export default function LibraryBtn({ onClick, children }) {
   return (
@@ -11,7 +11,7 @@ export default function LibraryBtn({ onClick, children }) {
         border: "1px solid #e2e8f0",
         textAlign: "left",
         cursor: "pointer",
-        fontSize: "11px",
+        fontSize:  "11px",
         marginBottom: '2px'
       }}
     >
