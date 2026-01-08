@@ -42,6 +42,6 @@ export function calculateBlockHash(blocks) {
   if (!blocks || blocks.length === 0) return 'empty';
   
   return blocks
-    .map(b => `${b.id}-${b.x}-${b. y}-${b.width}-${b. height}-${b.locked}`)
+    .map(b => `${b.id}-${b.x}-${b. y}-${b.width}-${b.height}-${b.locked}`)
     .join('|');
 }
