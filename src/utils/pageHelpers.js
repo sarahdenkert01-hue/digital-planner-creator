@@ -36,7 +36,7 @@ export function findMonthPageIndices(pages) {
     if (page.type === "MONTH" || page.name.toUpperCase().includes("OVERVIEW")) {
       const monthMatch = page.name.match(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i);
       if (monthMatch) {
-        monthPages[monthMatch[0]. toUpperCase()] = index;
+        monthPages[monthMatch[0].toUpperCase()] = index;
       }
     }
   });
