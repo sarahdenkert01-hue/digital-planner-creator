@@ -52,7 +52,7 @@ class RenderCache {
    */
   invalidate(pageId) {
     this.cache.delete(pageId);
-    this.blockHashes.delete(pageId);
+    this.blockHashes. delete(pageId);
   }
 
   /**
@@ -60,7 +60,7 @@ class RenderCache {
    */
   clear() {
     this.cache.clear();
-    this.blockHashes.clear();
+    this.blockHashes. clear();
   }
 
   /**
