@@ -34,7 +34,7 @@ export default function Sidebar({
     <div style={{
       width: "320px",
       background: "white",
-      padding: "20px",
+      padding:  "20px",
       overflowY: "auto",
       borderRight: "1px solid #ddd"
     }}>
@@ -56,7 +56,7 @@ export default function Sidebar({
           </button>
           <button
             onClick={onDeleteBlock}
-            style={{ ...STYLES.actionBtn, color: '#ff4d4f', marginTop: '5px' }}
+            style={{ ...STYLES.actionBtn, background: '#ff4d4f', marginTop: '5px' }}
           >
             🗑️ Delete
           </button>
@@ -67,7 +67,7 @@ export default function Sidebar({
       <SectionTitle>Planner Background</SectionTitle>
       <ButtonGroup items={LIBRARY_ITEMS. backgrounds} onClick={onChangeBackground} />
       <button
-        onClick={() => onChangeBackground(currentPage.bg, true)}
+        onClick={() => onChangeBackground(currentPage. bg, true)}
         style={{
           ...STYLES.smallBtn,
           width: '100%',
@@ -99,7 +99,7 @@ export default function Sidebar({
           background: '#4f46e5',
           color:  'white',
           border:  'none',
-          borderRadius: '4px',
+          borderRadius:  '4px',
           fontWeight: 'bold',
           marginBottom: '10px',
           cursor: 'pointer'
@@ -120,19 +120,25 @@ export default function Sidebar({
       {/* Planner Covers */}
       <SectionTitle>Planner Cover</SectionTitle>
       <ButtonGroup items={LIBRARY_ITEMS.covers} onClick={(id) => onAddBlock(id, "cover")} />
-      
+
       {/* Headers Section */}
       <SectionTitle>Headers</SectionTitle>
       <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg", "weekheader")}>
-      Sunday Start Weekday Header
+        Sunday Start Weekday Header
       </LibraryBtn>
       <LibraryBtn onClick={() => onAddBlock("monstartheader.svg", "weekheader")}>
-      Monday Start Weekday Header
+        Monday Start Weekday Header
       </LibraryBtn>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "2px",
+        marginTop: '5px'
+      }}>
         {MONTH_NAMES.map(m => (
           <button
             key={m}
-            onClick={() => onAddBlock(`${m}header.svg`)}
+            onClick={() => onAddBlock(`${m}header.svg`, "header")}
             style={{
               padding: '6px 4px',
               background: '#fff',
@@ -142,7 +148,7 @@ export default function Sidebar({
               borderRadius: '2px'
             }}
           >
-            {m. toUpperCase()}
+            {m.toUpperCase()}
           </button>
         ))}
       </div>
@@ -164,28 +170,28 @@ export default function Sidebar({
         </button>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
-      {MONTH_NAMES.map(m => (
-        <button
-          key={m}
-          onClick={() => onAddBlock(`${m}${startDay}start.svg`, "calendar")}
-          style={{
-           padding: '10px',
-           background: '#fff',
-           border: '1px solid #e2e8f0',
-           cursor: 'pointer',
-           fontSize: '11px',
-           borderRadius: '4px',
-           textAlign: 'center'
-          }}
-        >
-         {m.toUpperCase()}
-        </button>
-         ))}
-       </div>
+        {MONTH_NAMES.map(m => (
+          <button
+            key={m}
+            onClick={() => onAddBlock(`${m}${startDay}start.svg`, "calendar")}
+            style={{
+              padding: '10px',
+              background: '#fff',
+              border: '1px solid #e2e8f0',
+              cursor: 'pointer',
+              fontSize: '11px',
+              borderRadius: '4px',
+              textAlign: 'center'
+            }}
+          >
+            {m.toUpperCase()}
+          </button>
+        ))}
+      </div>
 
       {/* Full Page Templates */}
       <SectionTitle>Full Page Templates</SectionTitle>
-      <LibraryBtn onClick={() => onApplyStarter('annualplantemp.svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('annualplantemp. svg')}>
         Annual Planner
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monstartyearoverviewtemp.svg')}>
@@ -247,9 +253,9 @@ export default function Sidebar({
         onClick={onExportPDF}
         disabled={isExporting}
         style={{
-          ... STYLES.exportBtn,
+          ...STYLES.exportBtn,
           opacity: isExporting ? 0.6 : 1,
-          cursor: isExporting ? 'not-allowed' : 'pointer'
+          cursor: isExporting ?  'not-allowed' : 'pointer'
         }}
         title={isExporting ? "Export in progress..." : "Export all pages to PDF"}
       >
