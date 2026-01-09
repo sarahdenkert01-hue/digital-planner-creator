@@ -5,17 +5,17 @@ export const CANVAS_CONFIG = {
 };
 
 export const GRID_CONFIG = {
-  cellWidth: 155,
-  cellHeight: 125,
-  startX: 254,
-  startY: 740,
-  rows: 6,
+  cellWidth: 106,
+  cellHeight: 120,
+  startX: 140,
+  startY: 190,
+  rows: 5,
   cols: 7,
 };
 
 export const TAB_CONFIG = {
-  height: 80,
-  width:  120,
-  startX: 0,
-  startY: 360,
+  height: 85,
+  width: 55,
+  startX: 905,
+  startY: 95,
 };
