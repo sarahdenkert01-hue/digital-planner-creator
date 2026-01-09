@@ -19,7 +19,7 @@ export default function App() {
       section: 'NONE',
       type: 'NONE',
       blocks: [],
-      bg: 'backgroundwithtabs. png'
+      bg: 'backgroundwithtabs.png'
     }
   ]);
   
