@@ -15,14 +15,14 @@ export function createBlock(fileName, size = "full") {
   // Base dimensions for different sizes
   const dimensions = {
   full: { width: 1167, height: 1800, x: 225, y: 125 },
-  half: { width: 1167, height:  900, x: 225, y: 125 },
+  half: { width: 1167, height: 900, x: 225, y: 125 },
   quarter: { width: 583, height: 900, x: 225, y: 125 },
-  "1/8": { width: 583, height: 450, x: 225, y: 125 },
-  header: { width: 1167, height: 250, x: 225, y: 125 },
-  cover: { width: 1620, height: 2160, x: 0, y:  0 },
-  weekheader: { width: 742, height: 100, x: 140, y: 70 },   // Above calendar
-  calendar: { width:  742, height: 600, x: 140, y:  190 }      // Matches GRID_CONFIG
-};
+  "1/8": { width: 583, height: 450, x: 225, y:  125 },
+  header:  { width: 1167, height: 250, x: 225, y: 125 },
+  cover: { width: 1620, height: 2160, x: 0, y: 0 },
+  weekheader: { width: 735, height: 90, x: 250, y: 90 },    // Above calendar, centered
+  calendar: { width: 735, height: 708, x: 250, y:  200 }     // Larger calendar (7 cols × 105 = 735, 6 rows × 118 = 708)
+ };
   
   const { width, height, x, y } = dimensions[size] || dimensions.full;
   
