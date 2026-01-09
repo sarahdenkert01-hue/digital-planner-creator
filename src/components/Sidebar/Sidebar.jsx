@@ -29,6 +29,7 @@ export default function Sidebar({
   onApplyStarter,
   onSetStartDay,
   onExportPDF,
+  onAddMonthBundle
 }) {
   return (
     <div style={{
