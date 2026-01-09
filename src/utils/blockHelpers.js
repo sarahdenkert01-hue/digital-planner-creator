@@ -14,16 +14,21 @@ export function createBlock(fileName, size = "full") {
   
   // Base dimensions for different sizes
   const dimensions = {
-  full: { width: 1167, height: 1800, x: 225, y: 125 },
-  half: { width: 1167, height: 900, x: 225, y: 125 },
-  quarter: { width: 583, height: 900, x: 225, y: 125 },
-  "1/8": { width: 583, height: 450, x: 225, y:  125 },
-  header:  { width: 1167, height: 250, x: 225, y: 125 },
-  cover: { width: 1620, height: 2160, x: 0, y: 0 },
-  weekheader: { width: 735, height: 90, x: 250, y: 90 },    // Above calendar, centered
-  calendar: { width: 1000, height: 950, x: 253, y:  150 }
- };
+  full: { width: 1167, height: 1800, x: 253, y: 150 },
+  half: { width: 1167, height: 900, x: 253, y:  150 },
+  quarter:  { width: 583, height: 900, x:  253, y: 150 },
+  "1/8": { width: 583, height: 450, x: 253, y:  150 },
   
+  // Headers from your original logic
+  header: { width: 450, height: 100, x: 610, y: 100 },           // Month headers (janheader, etc) - centered
+  weekheader: { width: 1167, height: 100, x: 253, y: 220 },      // Weekday strips (sunstartheader, monstartheader)
+  
+  // Cover - full canvas
+  cover: { width: 1536, height: 2048, x: 0, y: 0 },
+  
+  // Calendar - matches your original month bundle logic
+  calendar: { width: 1167, height: 1000, x: 253, y:  330 }        // Calendar positioned at GRID_CONFIG position
+};
   const { width, height, x, y } = dimensions[size] || dimensions.full;
   
   return {
