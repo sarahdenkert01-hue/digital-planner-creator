@@ -184,6 +184,58 @@ export default function App() {
     }
   };
 
+  const addMonthBundle = (month) => {
+  const currentBg = currentPage.bg;
+  const timestamp = Date.now();
+  const bundle = [];
+  
+  // 1. Month overview page with calendar
+  const calendarFileName = `${month.toLowerCase()}${startDay}start.svg`;
+  const headerFileName = `${month.toLowerCase()}header.svg`;
+  
+  bundle.push({
+    id: `m-${month}-${timestamp}`,
+    name: `${month} Overview`,
+    section: month,
+    type: 'MONTH',
+    bg: currentBg,
+    blocks: [
+      createBlock(calendarFileName, 'calendar'),
+      createBlock(headerFileName, 'header')
+    ]
+  });
+  
+  // 2. Weekly pages (5 weeks per month)
+  for (let w = 1; w <= 5; w++) {
+    bundle.push({
+      id: `w-${month}-${w}-${timestamp}`,
+      name: `${month} Week ${w}`,
+      section: month,
+      type: 'WEEK',
+      bg: currentBg,
+      blocks: []
+    });
+  }
+  
+  // 3. Daily pages (31 days per month)
+  for (let d = 1; d <= 31; d++) {
+    bundle.push({
+      id: `d-${month}-${d}-${timestamp}`,
+      name: `${month} Day ${d}`,
+      section: month,
+      type: 'DAY',
+      bg: currentBg,
+      blocks: []
+    });
+  }
+  
+  // Add all bundle pages to the pages array
+  setPages(prev => [...prev, ... bundle]);
+  
+  // Optionally jump to the first page of the bundle
+  // setCurrentPageIndex(pages.length);
+  };
+
   const exportPDF = () => {
     alert('PDF export coming soon!');
   };
