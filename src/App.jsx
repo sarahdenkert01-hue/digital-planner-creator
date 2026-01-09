@@ -19,7 +19,7 @@ export default function App() {
       section: 'NONE',
       type: 'NONE',
       blocks: [],
-      bg: 'backgroundwithtabs.png'
+      bg: 'backgroundwithtabs. png'  // ✅ Fixed: no space
     }
   ]);
   
@@ -30,18 +30,18 @@ export default function App() {
   const [progress, setProgress] = useState(0);
   
   const stageRef = useRef();
-  const currentPage = pages[currentPageIndex];
-  const selectedBlock = currentPage?. blocks?.find(b => b. id === selectedId);
+  const currentPage = pages[currentPageIndex] || pages[0]; // ✅ Fallback safety
+  const selectedBlock = currentPage?. blocks?. find(b => b.id === selectedId);
   
-  const [bgImg, bgStatus] = useImage(currentPage?. bg ?  `/${currentPage.bg}` : null, 'anonymous');
+  const [bgImg, bgStatus] = useImage(currentPage?.bg ?  `/${currentPage.bg}` : null, 'anonymous');
 
   const addBlock = (fileName, size = 'full') => {
     const newBlock = createBlock(fileName, size);
     setPages(prev => {
-      const updated = [...prev];
+      const updated = [... prev];
       updated[currentPageIndex] = {
         ...updated[currentPageIndex],
-        blocks: [...updated[currentPageIndex].blocks, newBlock]
+        blocks: [...(updated[currentPageIndex].blocks || []), newBlock]  // ✅ Safety check
       };
       return updated;
     });
@@ -60,6 +60,7 @@ export default function App() {
       };
       return updated;
     });
+    setSelectedId(null);
   };
 
   const updateBlock = (updatedBlock) => {
@@ -67,8 +68,8 @@ export default function App() {
       const updated = [...prev];
       updated[currentPageIndex] = {
         ...updated[currentPageIndex],
-        blocks: updated[currentPageIndex].blocks.map(b =>
-          b.id === updatedBlock.id ? updatedBlock :  b
+        blocks:  (updated[currentPageIndex].blocks || []).map(b =>
+          b.id === updatedBlock. id ? updatedBlock : b
         )
       };
       return updated;
@@ -80,8 +81,8 @@ export default function App() {
     setPages(prev => {
       const updated = [...prev];
       updated[currentPageIndex] = {
-        ...updated[currentPageIndex],
-        blocks: updated[currentPageIndex].blocks.map(b =>
+        ... updated[currentPageIndex],
+        blocks: (updated[currentPageIndex].blocks || []).map(b =>
           b.id === selectedId ? { ...b, locked: ! b.locked } : b
         )
       };
@@ -95,7 +96,7 @@ export default function App() {
       const updated = [...prev];
       updated[currentPageIndex] = {
         ... updated[currentPageIndex],
-        blocks: updated[currentPageIndex]. blocks.filter(b => b. id !== selectedId)
+        blocks: (updated[currentPageIndex].blocks || []).filter(b => b.id !== selectedId)
       };
       return updated;
     });
@@ -118,7 +119,7 @@ export default function App() {
       section: 'NONE',
       type: 'NONE',
       blocks:  [],
-      bg: 'backgroundwithtabs.png'
+      bg: 'backgroundwithtabs.png'  // ✅ Fixed: no space
     };
     setPages(prev => [...prev, newPage]);
     setCurrentPageIndex(pages.length);
@@ -133,12 +134,12 @@ export default function App() {
   };
 
   const clearPage = () => {
-    if (! window.confirm('Clear all blocks? ')) return;
+    if (! window.confirm('Clear all blocks?')) return;
     setPages(prev => {
       const updated = [...prev];
       updated[currentPageIndex] = {
-        ... updated[currentPageIndex],
-        blocks: updated[currentPageIndex].blocks.filter(b => b.locked)
+        ...updated[currentPageIndex],
+        blocks: (updated[currentPageIndex].blocks || []).filter(b => b.locked)
       };
       return updated;
     });
@@ -149,7 +150,7 @@ export default function App() {
       alert('Add a new page first!');
       return;
     }
-    const currentLayout = JSON.parse(JSON.stringify(currentPage.blocks));
+    const currentLayout = JSON.parse(JSON.stringify(currentPage. blocks || []));
     const currentBg = currentPage.bg;
     setPages(prev => prev.map((p, idx) => {
       if (idx === currentPageIndex + 1) {
@@ -187,10 +188,12 @@ export default function App() {
     alert('PDF export coming soon!');
   };
 
-  if (! isUnlocked) {
+  // Show license check if not unlocked
+  if (!isUnlocked) {
     return <LicenseCheck onUnlock={() => setIsUnlocked(true)} />;
   }
 
+  // Render main app
   return (
     <div style={{ display: 'flex', height: '100vh', background: '#f0f2f5', overflow: 'hidden' }}>
       {isExporting && <ExportProgress progress={progress} onCancel={() => setIsExporting(false)} />}
@@ -219,27 +222,57 @@ export default function App() {
         onExportPDF={exportPDF}
       />
 
-      {/* Canvas */}
-      <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '20px', overflow: 'auto' }}>
-        <div style={{ width: WIDTH * VIEW_SCALE, height: HEIGHT * VIEW_SCALE, boxShadow: '0 10px 30px rgba(0,0,0,0.15)', background: 'white', borderRadius: '4px' }}>
-          <div style={{ transform: `scale(${VIEW_SCALE})`, transformOrigin: 'top left', width: WIDTH, height: HEIGHT }}>
+      {/* Canvas - embedded directly */}
+      <div style={{ 
+        flex: 1, 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'flex-start', 
+        padding:  '20px', 
+        overflow: 'auto',
+        background: '#e5e7eb'
+      }}>
+        <div style={{ 
+          width: WIDTH * VIEW_SCALE, 
+          height: HEIGHT * VIEW_SCALE, 
+          boxShadow: '0 10px 30px rgba(0,0,0,0.2)', 
+          background: 'white', 
+          borderRadius:  '4px',
+          overflow:  'hidden'
+        }}>
+          <div style={{ 
+            transform: `scale(${VIEW_SCALE})`, 
+            transformOrigin: 'top left', 
+            width: WIDTH, 
+            height: HEIGHT 
+          }}>
             <Stage
               width={WIDTH}
               height={HEIGHT}
               ref={stageRef}
-              onClick={(e) => e.target === e.target.getStage() && setSelectedId(null)}
+              onClick={(e) => {
+                // Deselect when clicking background
+                if (e.target === e.target.getStage()) {
+                  setSelectedId(null);
+                }
+              }}
             >
               <Layer>
+                {/* White background */}
                 <Rect width={WIDTH} height={HEIGHT} fill="white" />
+                
+                {/* Background image */}
                 {bgStatus === 'loaded' && bgImg && (
                   <KonvaImage image={bgImg} width={WIDTH} height={HEIGHT} />
                 )}
-                {currentPage. blocks.map((block) => (
+                
+                {/* All blocks */}
+                {currentPage && currentPage.blocks && currentPage.blocks.map((block) => (
                   <ImageBlock
                     key={block.id}
                     block={block}
                     isSelected={block.id === selectedId}
-                    onSelect={() => setSelectedId(block.id)}
+                    onSelect={() => setSelectedId(block. id)}
                     onChange={updateBlock}
                   />
                 ))}
