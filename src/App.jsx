@@ -19,7 +19,7 @@ export default function App() {
       section: 'NONE',
       type: 'NONE',
       blocks: [],
-      bg: 'backgroundwithtabs. png'  // ✅ Fixed: no space
+      bg: 'backgroundwithtabs.png'
     }
   ]);
   
@@ -30,18 +30,18 @@ export default function App() {
   const [progress, setProgress] = useState(0);
   
   const stageRef = useRef();
-  const currentPage = pages[currentPageIndex] || pages[0]; // ✅ Fallback safety
-  const selectedBlock = currentPage?. blocks?. find(b => b.id === selectedId);
+  const currentPage = pages[currentPageIndex] || pages[0];
+  const selectedBlock = currentPage?. blocks?.find(b => b. id === selectedId);
   
   const [bgImg, bgStatus] = useImage(currentPage?.bg ?  `/${currentPage.bg}` : null, 'anonymous');
 
   const addBlock = (fileName, size = 'full') => {
     const newBlock = createBlock(fileName, size);
     setPages(prev => {
-      const updated = [... prev];
+      const updated = [...prev];
       updated[currentPageIndex] = {
         ...updated[currentPageIndex],
-        blocks: [...(updated[currentPageIndex].blocks || []), newBlock]  // ✅ Safety check
+        blocks: [... (updated[currentPageIndex].blocks || []), newBlock]
       };
       return updated;
     });
@@ -49,13 +49,13 @@ export default function App() {
   };
 
   const applyStarter = (fileName) => {
-    if (! window.confirm('Replace all blocks? ')) return;
+    if (!window.confirm('Replace all blocks? ')) return;
     const starterBlock = createBlock(fileName, 'full');
     starterBlock.locked = true;
     setPages(prev => {
       const updated = [...prev];
       updated[currentPageIndex] = {
-        ... updated[currentPageIndex],
+        ...updated[currentPageIndex],
         blocks: [starterBlock]
       };
       return updated;
@@ -69,7 +69,7 @@ export default function App() {
       updated[currentPageIndex] = {
         ...updated[currentPageIndex],
         blocks:  (updated[currentPageIndex].blocks || []).map(b =>
-          b.id === updatedBlock. id ? updatedBlock : b
+          b.id === updatedBlock.id ? updatedBlock : b
         )
       };
       return updated;
@@ -77,13 +77,13 @@ export default function App() {
   };
 
   const toggleLock = () => {
-    if (! selectedId) return;
+    if (!selectedId) return;
     setPages(prev => {
       const updated = [...prev];
       updated[currentPageIndex] = {
-        ... updated[currentPageIndex],
+        ...updated[currentPageIndex],
         blocks: (updated[currentPageIndex].blocks || []).map(b =>
-          b.id === selectedId ? { ...b, locked: ! b.locked } : b
+          b.id === selectedId ? { ...b, locked: !b. locked } : b
         )
       };
       return updated;
@@ -95,7 +95,7 @@ export default function App() {
     setPages(prev => {
       const updated = [...prev];
       updated[currentPageIndex] = {
-        ... updated[currentPageIndex],
+        ...updated[currentPageIndex],
         blocks: (updated[currentPageIndex].blocks || []).filter(b => b.id !== selectedId)
       };
       return updated;
@@ -104,9 +104,9 @@ export default function App() {
   };
 
   const changeBackground = (bgFileName, applyToAll = false) => {
-    setPages(prev => prev. map((p, idx) => {
+    setPages(prev => prev.map((p, idx) => {
       if (applyToAll || idx === currentPageIndex) {
-        return { ...p, bg: bgFileName };
+        return { ... p, bg: bgFileName };
       }
       return p;
     }));
@@ -118,8 +118,8 @@ export default function App() {
       name: 'New Page',
       section: 'NONE',
       type: 'NONE',
-      blocks:  [],
-      bg: 'backgroundwithtabs.png'  // ✅ Fixed: no space
+      blocks: [],
+      bg: 'backgroundwithtabs. png'
     };
     setPages(prev => [...prev, newPage]);
     setCurrentPageIndex(pages.length);
@@ -178,74 +178,73 @@ export default function App() {
     if (newName && newName. trim()) {
       setPages(prev => {
         const updated = [...prev];
-        updated[index] = { ...updated[index], name: newName. trim() };
+        updated[index] = { ...updated[index], name: newName.trim() };
         return updated;
       });
     }
   };
 
+  // ✅ ADD MONTH BUNDLE FUNCTION
   const addMonthBundle = (month) => {
-  const currentBg = currentPage.bg;
-  const timestamp = Date.now();
-  const bundle = [];
-  
-  // 1. Month overview page with calendar
-  const calendarFileName = `${month.toLowerCase()}${startDay}start.svg`;
-  const headerFileName = `${month.toLowerCase()}header.svg`;
-  
-  bundle.push({
-    id: `m-${month}-${timestamp}`,
-    name: `${month} Overview`,
-    section: month,
-    type: 'MONTH',
-    bg: currentBg,
-    blocks: [
-      createBlock(calendarFileName, 'calendar'),
-      createBlock(headerFileName, 'header')
-    ]
-  });
-  
-  // 2. Weekly pages (5 weeks per month)
-  for (let w = 1; w <= 5; w++) {
+    console.log('Adding month bundle for:', month); // Debug log
+    
+    const currentBg = currentPage.bg;
+    const timestamp = Date.now();
+    const bundle = [];
+    
+    // Month overview page
+    const calendarFileName = `${month.toLowerCase()}${startDay}start.svg`;
+    const headerFileName = `${month.toLowerCase()}header.svg`;
+    
     bundle.push({
-      id: `w-${month}-${w}-${timestamp}`,
-      name: `${month} Week ${w}`,
+      id: `m-${month}-${timestamp}`,
+      name: `${month} Overview`,
       section: month,
-      type: 'WEEK',
+      type: 'MONTH',
       bg: currentBg,
-      blocks: []
+      blocks: [
+        createBlock(calendarFileName, 'calendar'),
+        createBlock(headerFileName, 'header')
+      ]
     });
-  }
-  
-  // 3. Daily pages (31 days per month)
-  for (let d = 1; d <= 31; d++) {
-    bundle.push({
-      id: `d-${month}-${d}-${timestamp}`,
-      name: `${month} Day ${d}`,
-      section: month,
-      type: 'DAY',
-      bg: currentBg,
-      blocks: []
-    });
-  }
-  
-  // Add all bundle pages to the pages array
-  setPages(prev => [...prev, ... bundle]);
-  
-  // Optionally jump to the first page of the bundle
-  // setCurrentPageIndex(pages.length);
+    
+    // Weekly pages
+    for (let w = 1; w <= 5; w++) {
+      bundle.push({
+        id: `w-${month}-${w}-${timestamp}`,
+        name: `${month} Week ${w}`,
+        section: month,
+        type: 'WEEK',
+        bg: currentBg,
+        blocks: []
+      });
+    }
+    
+    // Daily pages
+    for (let d = 1; d <= 31; d++) {
+      bundle.push({
+        id: `d-${month}-${d}-${timestamp}`,
+        name: `${month} Day ${d}`,
+        section: month,
+        type:  'DAY',
+        bg: currentBg,
+        blocks: []
+      });
+    }
+    
+    console.log('Bundle created:', bundle. length, 'pages'); // Debug log
+    setPages(prev => [...prev, ...bundle]);
+    alert(`Added ${bundle.length} pages for ${month}!`);
   };
 
   const exportPDF = () => {
     alert('PDF export coming soon!');
   };
 
-  // Show license check if not unlocked
   if (!isUnlocked) {
     return <LicenseCheck onUnlock={() => setIsUnlocked(true)} />;
   }
 
-  // Render main app
   return (
     <div style={{ display: 'flex', height: '100vh', background: '#f0f2f5', overflow: 'hidden' }}>
       {isExporting && <ExportProgress progress={progress} onCancel={() => setIsExporting(false)} />}
@@ -272,15 +271,15 @@ export default function App() {
         onApplyStarter={applyStarter}
         onSetStartDay={setStartDay}
         onExportPDF={exportPDF}
+        onAddMonthBundle={addMonthBundle}
       />
 
-      {/* Canvas - embedded directly */}
       <div style={{ 
         flex: 1, 
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'flex-start', 
-        padding:  '20px', 
+        padding: '20px', 
         overflow: 'auto',
         background: '#e5e7eb'
       }}>
@@ -289,8 +288,8 @@ export default function App() {
           height: HEIGHT * VIEW_SCALE, 
           boxShadow: '0 10px 30px rgba(0,0,0,0.2)', 
           background: 'white', 
-          borderRadius:  '4px',
-          overflow:  'hidden'
+          borderRadius: '4px',
+          overflow: 'hidden'
         }}>
           <div style={{ 
             transform: `scale(${VIEW_SCALE})`, 
@@ -303,22 +302,16 @@ export default function App() {
               height={HEIGHT}
               ref={stageRef}
               onClick={(e) => {
-                // Deselect when clicking background
                 if (e.target === e.target.getStage()) {
                   setSelectedId(null);
                 }
               }}
             >
               <Layer>
-                {/* White background */}
                 <Rect width={WIDTH} height={HEIGHT} fill="white" />
-                
-                {/* Background image */}
                 {bgStatus === 'loaded' && bgImg && (
                   <KonvaImage image={bgImg} width={WIDTH} height={HEIGHT} />
                 )}
-                
-                {/* All blocks */}
                 {currentPage && currentPage.blocks && currentPage.blocks.map((block) => (
                   <ImageBlock
                     key={block.id}
