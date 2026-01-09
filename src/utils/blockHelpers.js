@@ -21,7 +21,7 @@ export function createBlock(fileName, size = "full") {
   header:  { width: 1167, height: 250, x: 225, y: 125 },
   cover: { width: 1620, height: 2160, x: 0, y: 0 },
   weekheader: { width: 735, height: 90, x: 250, y: 90 },    // Above calendar, centered
-  calendar: { width: 735, height: 708, x: 250, y:  200 }     // Larger calendar (7 cols × 105 = 735, 6 rows × 118 = 708)
+  calendar: { width: 1000, height: 950, x: 253, y:  150 }
  };
   
   const { width, height, x, y } = dimensions[size] || dimensions.full;
