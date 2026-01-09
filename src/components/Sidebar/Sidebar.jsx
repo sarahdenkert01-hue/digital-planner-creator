@@ -189,6 +189,31 @@ export default function Sidebar({
         ))}
       </div>
 
+      <SectionTitle>Month Bundles</SectionTitle>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
+        Creates complete month package:  Overview + 5 Weeks + 31 Days
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px" }}>
+        {MONTH_NAMES.map(m => (
+          <button
+            key={m}
+            onClick={() => onAddMonthBundle(m. toUpperCase())}
+            style={{
+              padding: '8px 4px',
+              background: '#eef2ff',
+              border: '1px solid #c7d2fe',
+              cursor:  'pointer',
+              fontSize:  '10px',
+              borderRadius: '4px',
+              fontWeight: 'bold',
+              color: '#4f46e5'
+            }}
+          >
+            {m.toUpperCase()}
+          </button>
+        ))}
+      </div>
+
       {/* Full Page Templates */}
       <SectionTitle>Full Page Templates</SectionTitle>
       <LibraryBtn onClick={() => onApplyStarter('annualplantemp. svg')}>
