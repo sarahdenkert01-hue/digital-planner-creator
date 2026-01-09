@@ -1,21 +1,23 @@
 export const CANVAS_CONFIG = {
-  WIDTH: 1620,
-  HEIGHT: 2160,
-  VIEW_SCALE: 0.4,
+  WIDTH: 1536,      // ← Original working width
+  HEIGHT: 2048,     // ← Original working height
+  VIEW_SCALE: 0.35,
 };
 
+// Grid configuration from your original code
 export const GRID_CONFIG = {
-  cellWidth: 168,      // Width of each date cell
-  cellHeight: 200,     // Height of each date cell
-  startX: 253,         // More centered horizontally
-  startY: 150,         // Vertical start position
-  rows: 6,             // 6 rows (some months need more rows)
-  cols: 7,             // 7 columns (days of week)
+  cellWidth: 168,    // ← Your original sqWidth
+  cellHeight: 200,   // ← Your original sqHeight
+  startX: 253,       // ← Your original startX
+  startY: 330,       // ← Your original startY
+  rows: 6,
+  cols: 7,
 };
 
+// Tab configuration from your original code
 export const TAB_CONFIG = {
-  height: 125,          // Height of each month tab
-  width: 59,           // Width of each tab
-  startX: 1477,        // Right side tabs position
-  startY: 166,         // Starting Y position for first tab
+  height: 125,       // ← Your original height
+  width: 59,         // ← Your original width
+  startX: 1477,      // ← Your original x position
+  startY: 166,       // ← Your original startY
 };
