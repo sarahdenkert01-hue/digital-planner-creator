@@ -217,13 +217,13 @@ export default function Sidebar({
 
       {/* Full Page Templates */}
       <SectionTitle>Full Page Templates</SectionTitle>
-      <LibraryBtn onClick={() => onApplyStarter('annualplantemp. svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('annualplantemp.svg')}>
         Annual Planner
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monstartyearoverviewtemp.svg')}>
         Monday Start Year Overview
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('sunstartyearoverviewtemp. svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('sunstartyearoverviewtemp.svg')}>
         Sunday Start Year Overview
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monstartweekplantemp.svg')}>
@@ -235,7 +235,7 @@ export default function Sidebar({
       <LibraryBtn onClick={() => onApplyStarter('monstartweektemp.svg')}>
         Monday Start Weekly Session Schedule
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('sunstartweektemp. svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('sunstartweektemp.svg')}>
         Sunday Start Weekly Session Schedule
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monthreviewtemp.svg')}>
