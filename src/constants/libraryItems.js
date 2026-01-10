@@ -56,7 +56,7 @@ export const LIBRARY_ITEMS = {
     { id: 'sunstartminimonth.svg', label: 'Sunday Start Mini Month' },
     { id: 'monstarttracker.svg', label: 'Monday Start Tracker' },
     { id: 'sunstarttracker.svg', label: 'Sunday Start Tracker' },
-    { id: 'smalldotgrid.svg', label: 'Dot Grid' },
+    { id: 'smalldotgird.svg', label: 'Dot Grid' },
     { id: 'smallgrid.svg', label: 'Grid' },
     { id: 'smallhabittracker.svg', label: 'Habit Tracker' },
     { id: 'smallmoodtracker.svg', label: 'Mood Tracker' },
