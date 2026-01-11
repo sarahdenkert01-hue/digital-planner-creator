@@ -76,6 +76,16 @@ export default function Sidebar({
           marginBottom: '15px'
         }}
       >
+      <button
+        onClick={() => onChangeBackground(currentPage.bg, true)}
+        style={{
+          ...STYLES.smallBtn,
+          width: '100%',
+          background: '#ffede6',
+          color: '#f7b292',  // ✅ Add this - dark blue text
+          marginBottom: '15px'
+        }}
+      >
         Apply Background to ALL
       </button>
 
@@ -191,7 +201,7 @@ export default function Sidebar({
       </div>
 
       <SectionTitle>Month Bundles</SectionTitle>
-      <p style={{ fontSize: '10px', color: '#fae2d7', marginBottom: '8px', lineHeight: '1.4' }}>
+      <p style={{ fontSize: '10px', color: '#ffc8b0', marginBottom: '8px', lineHeight: '1.4' }}>
         Creates complete month package:  Overview + 5 Weeks + 31 Days
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px" }}>
