@@ -54,7 +54,8 @@ export const LIBRARY_ITEMS = {
     { id: 'quarterlists.svg', label: 'Lists' },
     { id: 'quarternotes.svg', label: 'Notes' },
     { id: 'quartertodo.svg', label: 'To Do' },
-    { id: 'quartertoday.svg', label: 'Daily Schedule' }
+    { id: 'quartertoday.svg', label: 'Daily Schedule' },
+    { id: 'quarterbraindump', label: 'Brain Dump' }
   ],
   
   eighth: [
@@ -71,6 +72,7 @@ export const LIBRARY_ITEMS = {
     { id: 'smallreminder.svg', label: 'Reminder' },
     { id: 'smallwatertracker.svg', label: 'Water Tracker' },
     { id: 'toppriorities.svg', label: 'Top Priorities' },
-    { id: 'smallenergy.svg', label: 'Energy Tracker' }
+    { id: 'smallenergy.svg', label: 'Energy Tracker' },
+    { id: 'smalltasks.svg', label: 'Work/Personal/Self-care Tasks' }
   ]
 };
