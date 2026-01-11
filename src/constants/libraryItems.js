@@ -4,15 +4,15 @@ export const LIBRARY_ITEMS = {
     { id: 'glitter.png', label: 'Glitter' },
     { id: 'mermaid.png', label: 'Mermaid' },
     { id: 'earthtones.png', label: 'Neutral' },
-    { id:  'rainbow.png', label: 'Rainbow' },
+    { id: 'rainbow.png', label: 'Rainbow' },
     { id: 'marble.png', label: 'Marble' },
     { id: 'cheetah.png', label: 'Cheetah' },
     { id: 'gingham.png', label: 'Gingham' },
     { id: 'brown.svg', label: 'Brown Leather' },
     { id: 'blue.svg', label: 'Blue' },
     { id: 'green.svg', label: 'Green' },
-    { id: 'burgundy. svg', label: 'Burgundy' },
-    { id:  'lilac.svg', label: 'Lilac' }
+    { id: 'burgundy.svg', label: 'Burgundy' },
+    { id: 'lilac.svg', label: 'Lilac' }
   ],
   
   covers: [
@@ -33,12 +33,12 @@ export const LIBRARY_ITEMS = {
   
   clinical: [
     { id: 'sessionnotetemp.svg', label: 'Session Notes' },
-    { id: 'billingtemp. svg', label: 'Billing Tracker' },
+    { id: 'billingtemp.svg', label: 'Billing Tracker' },
     { id: 'ceutrackertemp.svg', label: 'CEU Tracker' },
     { id: 'insurancetrackertemp.svg', label: 'Insurance Tracker' },
     { id: 'thoughtlogtemp.svg', label: 'Thought Log' },
     { id: 'progresstemp.svg', label: 'Progress Notes' },
-    { id: 'goalplantemp. svg', label: 'Goal Planner' }
+    { id: 'goalplantemp.svg', label: 'Goal Planner' }
   ],
   
   notes: [
@@ -51,17 +51,17 @@ export const LIBRARY_ITEMS = {
   
   halfPage: [
     { id: 'monselfcare.svg', label: 'Monday Self-Care Tracker' },
-    { id:  'sunselfcare.svg', label: 'Sunday Self-Care Tracker' },
+    { id: 'sunselfcare.svg', label: 'Sunday Self-Care Tracker' },
     { id: 'prioritytemplate.svg', label: 'Priority Planner' },
     { id: 'monstartweek.svg', label: 'Monday Weekly Schedule' },
-    { id:  'sunstartweek. svg', label: 'Sunday Weekly Schedule' }
+    { id: 'sunstartweek.svg', label: 'Sunday Weekly Schedule' }
   ],
   
   quarter: [
     { id: 'quarterdots. svg', label: 'Dot Grid' },
-    { id:  'quartergrid.svg', label: 'Grid' },
+    { id: 'quartergrid.svg', label: 'Grid' },
     { id: 'quarterlists.svg', label: 'Lists' },
-    { id:  'quarternotes.svg', label: 'Notes' },
+    { id: 'quarternotes.svg', label: 'Notes' },
     { id: 'quartertodo.svg', label: 'To Do' }
   ],
   
@@ -69,7 +69,7 @@ export const LIBRARY_ITEMS = {
     { id: 'hometodo.svg', label: 'Home To Do' },
     { id: 'worktodo.svg', label: 'Work To Do' },
     { id: 'monstartminimonth.svg', label: 'Monday Mini Month' },
-    { id:  'sunstartminimonth.svg', label: 'Sunday Mini Month' },
+    { id: 'sunstartminimonth.svg', label: 'Sunday Mini Month' },
     { id: 'monstarttracker.svg', label: 'Monday Tracker' },
     { id: 'sunstarttracker.svg', label: 'Sunday Tracker' },
     { id: 'smalldotgird.svg', label: 'Dot Grid' },
@@ -79,6 +79,6 @@ export const LIBRARY_ITEMS = {
     { id: 'smallreminder.svg', label: 'Reminder' },
     { id: 'smallwatertracker.svg', label: 'Water Tracker' },
     { id: 'toppriorities. svg', label: 'Top Priorities' },
-    { id:  'smallenergy.svg', label: 'Energy Tracker' }
+    { id: 'smallenergy.svg', label: 'Energy Tracker' }
   ]
 };
