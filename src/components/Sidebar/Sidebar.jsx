@@ -72,7 +72,7 @@ export default function Sidebar({
         style={{
           ...STYLES.smallBtn,
           width: '100%',
-          background: '#e1f5fe',
+          background: '#ffc8b0',
           marginBottom: '15px'
         }}
       >
@@ -97,7 +97,7 @@ export default function Sidebar({
         style={{
           width: '100%',
           padding: '10px',
-          background: '#4f46e5',
+          background: '#ffc8b0',
           color:  'white',
           border:  'none',
           borderRadius:  '4px',
@@ -143,7 +143,7 @@ export default function Sidebar({
             style={{
               padding: '6px 4px',
               background: '#fff',
-              border: '1px solid #e2e8f0',
+              border: '1px solid #ffc8b0',
               cursor: 'pointer',
               fontSize: '9px',
               borderRadius: '2px'
@@ -178,7 +178,7 @@ export default function Sidebar({
             style={{
               padding: '10px',
               background: '#fff',
-              border: '1px solid #e2e8f0',
+              border: '1px solid #ffc8b0',
               cursor: 'pointer',
               fontSize: '11px',
               borderRadius: '4px',
@@ -201,13 +201,13 @@ export default function Sidebar({
             onClick={() => onAddMonthBundle(m. toUpperCase())}
             style={{
               padding: '8px 4px',
-              background: '#eef2ff',
-              border: '1px solid #c7d2fe',
+              background: '#ffc8b0',
+              border: '1px solid ##fae2d7',
               cursor:  'pointer',
               fontSize:  '10px',
               borderRadius: '4px',
               fontWeight: 'bold',
-              color: '#4f46e5'
+              color: '#ffc8b0'
             }}
           >
             {m.toUpperCase()}
