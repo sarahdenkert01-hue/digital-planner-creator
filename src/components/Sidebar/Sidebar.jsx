@@ -191,7 +191,7 @@ export default function Sidebar({
       </div>
 
       <SectionTitle>Month Bundles</SectionTitle>
-      <p style={{ fontSize: '10px', color: '#799c99', marginBottom: '8px', lineHeight: '1.4' }}>
+      <p style={{ fontSize: '10px', color: '#fae2d7', marginBottom: '8px', lineHeight: '1.4' }}>
         Creates complete month package:  Overview + 5 Weeks + 31 Days
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px" }}>
@@ -202,7 +202,7 @@ export default function Sidebar({
             style={{
               padding: '8px 4px',
               background: '#ffc8b0',
-              border: '1px solid ##ffede6',
+              border: '1px solid #ffede6',
               cursor:  'pointer',
               fontSize:  '10px',
               borderRadius: '4px',
