@@ -346,9 +346,14 @@ export default function App() {
   }
 };
 
-  if (!isUnlocked) {
-    return <LicenseCheck onUnlock={() => setIsUnlocked(true)} />;
-  }
+      if (!isUnlocked) {
+      return <LicenseCheck onUnlock={() => {
+        console.log('🎊 onUnlock called in App.jsx! ');
+        console.log('🎊 Setting isUnlocked to true');
+        setIsUnlocked(true);
+        console.log('🎊 isUnlocked state should now be true');
+      }} />;
+    }
 
   return (
     <div style={{ display: 'flex', height: '100vh', background: '#f0f2f5', overflow: 'hidden' }}>
