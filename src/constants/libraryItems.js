@@ -44,7 +44,8 @@ export const LIBRARY_ITEMS = {
     { id: 'sunselfcare.svg', label: 'Sunday Self-Care Tracker' },
     { id: 'prioritytemplate.svg', label: 'Priority Planner' },
     { id: 'monstartweek.svg', label: 'Monday Weekly Schedule' },
-    { id: 'sunstartweek.svg', label: 'Sunday Weekly Schedule' }
+    { id: 'sunstartweek.svg', label: 'Sunday Weekly Schedule' },
+    { id: 'halftodaycomplete.svg', label: 'Daily Columns' },
   ],
   
   quarter: [
@@ -52,7 +53,8 @@ export const LIBRARY_ITEMS = {
     { id: 'quartergrid.svg', label: 'Grid' },
     { id: 'quarterlists.svg', label: 'Lists' },
     { id: 'quarternotes.svg', label: 'Notes' },
-    { id: 'quartertodo.svg', label: 'To Do' }
+    { id: 'quartertodo.svg', label: 'To Do' },
+    { id: 'quartertoday.svg', label: 'Daily Schedule' }
   ],
   
   eighth: [
