@@ -113,17 +113,17 @@ export default function App() {
   };
 
   const addBlankPage = () => {
-    const newPage = {
-      id:  Date.now().toString() + Math.random(),
-      name: 'New Page',
-      section: 'NONE',
-      type: 'NONE',
-      blocks: [],
-      bg: 'backgroundwithtabs. png'
-    };
-    setPages(prev => [...prev, newPage]);
-    setCurrentPageIndex(pages.length);
-  };
+   const newPage = {
+     id:  Date.now().toString() + Math.random(),
+     name: 'New Page',
+     section: 'NONE',
+     type: 'NONE',
+     blocks: [],
+     bg: currentPage.bg  // ✅ Inherits from current page
+   };
+   setPages(prev => [...prev, newPage]);
+   setCurrentPageIndex(pages.length);
+ };
 
   const duplicatePage = () => {
     const newPage = JSON.parse(JSON.stringify(currentPage));
