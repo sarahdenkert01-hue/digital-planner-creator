@@ -8,11 +8,6 @@ export const LIBRARY_ITEMS = {
     { id: 'marble.png', label: 'Marble' },
     { id: 'cheetah.png', label: 'Cheetah' },
     { id: 'gingham.png', label: 'Gingham' },
-    { id: 'brown.svg', label: 'Brown Leather' },
-    { id: 'blue.svg', label: 'Blue' },
-    { id: 'green.svg', label: 'Green' },
-    { id: 'burgundy.svg', label: 'Burgundy' },
-    { id: 'lilac.svg', label: 'Lilac' }
   ],
   
   covers: [
@@ -24,11 +19,6 @@ export const LIBRARY_ITEMS = {
     { id: 'marblecover.png', label: 'Marble' },
     { id: 'cheetahcover.png', label: 'Cheetah' },
     { id: 'ginghamcover.png', label: 'Gingham' },
-    { id: 'browncover.svg', label: 'Brown Leather' },
-    { id: 'bluecover.svg', label: 'Blue' },
-    { id: 'greencover.svg', label: 'Green' },
-    { id: 'burgundycover.svg', label: 'Burgundy' },
-    { id: 'lilaccover.svg', label: 'Lilac' }
   ],
   
   clinical: [
