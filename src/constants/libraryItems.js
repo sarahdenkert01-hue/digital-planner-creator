@@ -54,8 +54,8 @@ export const LIBRARY_ITEMS = {
     { id: 'quarterlists.svg', label: 'To Do' },
     { id: 'quarternotes.svg', label: 'Notes' },
     { id: 'quartertodo.svg', label: 'Lists' },
-    { id: 'quartertodayschedule.svg', label: 'Daily Schedule' },
-    { id: 'quarterbraindump', label: 'Brain Dump' }
+    { id: 'quatertodayschedule.svg', label: 'Daily Schedule' },
+    { id: 'quarterbraindump.svg', label: 'Brain Dump' }
   ],
   
   eighth: [
