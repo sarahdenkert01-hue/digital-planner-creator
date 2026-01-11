@@ -14,7 +14,7 @@ export function createBlock(fileName, size = "full") {
   
   // Base dimensions for different sizes
   const dimensions = {
-  full: { width: 1167, height: 1800, x: 253, y: 150 },
+  full: { width: 1167, height: 1800, x: 248, y: 150 },
   half: { width: 1167, height: 900, x: 253, y:  150 },
   quarter:  { width: 583, height: 900, x:  253, y: 150 },
   "1/8": { width: 583, height: 450, x: 253, y:  150 },
