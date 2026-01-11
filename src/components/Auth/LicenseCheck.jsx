@@ -114,7 +114,7 @@ export default function LicenseCheck({ onUnlock }) {
           style={{
             width: '100%',
             padding: '15px',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #e0eff2 0%, ##abd3db 100%)',
             color: 'white',
             border: 'none',
             borderRadius: '10px',
