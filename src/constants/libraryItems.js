@@ -33,6 +33,7 @@ export const LIBRARY_ITEMS = {
   
   clinical: [
     { id: 'sessionnotetemp.svg', label: 'Session Notes' },
+    { id: 'dailysessionstemp.svg', label: 'Daily Sessions' },
     { id: 'billingtemp.svg', label: 'Billing Tracker' },
     { id: 'ceutrackertemp.svg', label: 'CEU Tracker' },
     { id: 'insurancetrackertemp.svg', label: 'Insurance Tracker' },
