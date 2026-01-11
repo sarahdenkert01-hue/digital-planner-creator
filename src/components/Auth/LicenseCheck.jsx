@@ -28,34 +28,48 @@ export default function LicenseCheck({ onUnlock }) {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      background: `linear-gradient(-45deg, #ffc0b0, #ffedb0, #beffb0, ##b0ffe2),`,
+      background: 'linear-gradient(-45deg, #ffc0b0, #ffedb0, #beffb0, #b0ffe2)',  // ✅ Fixed:  removed extra comma and double ##
       backgroundSize: '400% 400%',
       animation: 'gradient 15s ease infinite',
       fontFamily: 'sans-serif'
     }}>
       <style>
-    {`
-      @keyframes gradient {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-    `}
-       <img 
-         src="/logo.svg" 
-         alt="Logo" 
-         style={{
-           width:  '150px',
-           height: 'auto',
-           marginBottom: '20px'
-      }}
-      />
+        {`
+          @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+        `}
+      </style>
+      
+      {/* ✅ Fixed:  Moved content inside proper div */}
+      <div style={{
+        background: 'rgba(255, 255, 255, 0.95)',
+        padding: '50px',
+        borderRadius: '20px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+        textAlign: 'center',
+        maxWidth: '450px',
+        width: '90%',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.5)'
+      }}>
+        <img 
+          src="/logo.svg" 
+          alt="Logo" 
+          style={{
+            width: '150px',
+            height: 'auto',
+            marginBottom: '20px'
+          }}
+        />
 
         <h1 style={{ 
           marginBottom: '10px', 
           fontSize: '28px',
           background: 'linear-gradient(135deg, #ffc8b0 0%, #ff9c70 100%)',
-          WebkitBackgroundClip:  'text',
+          WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           fontWeight: 'bold'
         }}>
@@ -65,7 +79,7 @@ export default function LicenseCheck({ onUnlock }) {
         <p style={{ 
           color: '#666', 
           marginBottom: '30px', 
-          fontSize: '14px',
+          fontSize:  '14px',
           lineHeight: '1.6'
         }}>
           Welcome!  Enter your license key to start creating your custom planner.
@@ -99,8 +113,8 @@ export default function LicenseCheck({ onUnlock }) {
             fontSize: '13px',
             background: '#fff1f0',
             padding: '10px',
-            borderRadius: '8px',
-            border: '1px solid #ffccc7'
+            borderRadius:  '8px',
+            border:  '1px solid #ffccc7'
           }}>
             ⚠️ {error}
           </p>
@@ -111,7 +125,7 @@ export default function LicenseCheck({ onUnlock }) {
           style={{
             width: '100%',
             padding: '15px',
-            background: 'linear-gradient(135deg, #e0eff2 0%, ##abd3db 100%)',
+            background: 'linear-gradient(135deg, #e0eff2 0%, #abd3db 100%)',  // ✅ Fixed: removed double ##
             color: 'white',
             border: 'none',
             borderRadius: '10px',
@@ -119,22 +133,22 @@ export default function LicenseCheck({ onUnlock }) {
             fontSize: '16px',
             fontWeight: 'bold',
             transition: 'transform 0.2s, box-shadow 0.2s',
-            boxShadow: '0 4px 15px rgba(0, 0, 0, 4)'
+            boxShadow:  '0 4px 15px rgba(0, 0, 0, 0.4)'  // ✅ Fixed: changed 4 to 0.4
           }}
           onMouseOver={(e) => {
-            e.target.style. transform = 'translateY(-2px)';
-            e.target.style. boxShadow = '0 6px 20px rgba(0, 0, 0, 4)';
+            e. target.style.transform = 'translateY(-2px)';
+            e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.6)';  // ✅ Fixed: changed 4 to 0.6
           }}
           onMouseOut={(e) => {
-            e.target. style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 4)';
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.4)';  // ✅ Fixed: changed 4 to 0.4
           }}
         >
           🔓 Unlock Access
         </button>
 
         <p style={{ 
-          fontSize:  '11px', 
+          fontSize: '11px', 
           color: '#999', 
           marginTop: '20px',
           lineHeight: '1.5'
