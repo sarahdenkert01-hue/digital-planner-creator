@@ -231,7 +231,7 @@ export default function Sidebar({
       <LibraryBtn onClick={() => onApplyStarter('monstartweekplantemp.svg')}>
         Monday Start Weekly Plan
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('sunstartweekplantemp. svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('sunstartweekplantemp.svg')}>
         Sunday Start Weekly Plan
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monstartweektemp.svg')}>
@@ -243,7 +243,7 @@ export default function Sidebar({
       <LibraryBtn onClick={() => onApplyStarter('monthreviewtemp.svg')}>
         Monthly Review
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('taskplannertemp. svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('taskplannertemp.svg')}>
         Task Planner
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('listplannertemp.svg')}>
