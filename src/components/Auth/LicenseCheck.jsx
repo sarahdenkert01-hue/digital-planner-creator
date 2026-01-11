@@ -10,25 +10,32 @@ export default function LicenseCheck({ onUnlock }) {
   } = useLicenseValidation();
 
   const handleSubmit = () => {
+    console.log('🚀 handleSubmit called');
+    console.log('🔑 License input:', licenseInput);
+    
     if (checkLicense()) {
+      console.log('🎉 checkLicense returned true, calling onUnlock');
       onUnlock();
+    } else {
+      console.log('❌ checkLicense returned false');
     }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
+      console.log('⌨️ Enter key pressed');
       handleSubmit();
     }
   };
 
   return (
     <div style={{
-      display:  'flex',
+      display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      background: 'linear-gradient(-45deg, #ffc0b0, #ffedb0, #beffb0, #b0ffe2)',  // ✅ Fixed:  removed extra comma and double ##
+      background: 'linear-gradient(-45deg, #ffc0b0, #ffedb0, #beffb0, #b0ffe2)',
       backgroundSize: '400% 400%',
       animation: 'gradient 15s ease infinite',
       fontFamily: 'sans-serif'
@@ -43,7 +50,6 @@ export default function LicenseCheck({ onUnlock }) {
         `}
       </style>
       
-      {/* ✅ Fixed:  Moved content inside proper div */}
       <div style={{
         background: 'rgba(255, 255, 255, 0.95)',
         padding: '50px',
@@ -79,7 +85,7 @@ export default function LicenseCheck({ onUnlock }) {
         <p style={{ 
           color: '#666', 
           marginBottom: '30px', 
-          fontSize:  '14px',
+          fontSize: '14px',
           lineHeight: '1.6'
         }}>
           Welcome!  Enter your license key to start creating your custom planner.
@@ -99,7 +105,7 @@ export default function LicenseCheck({ onUnlock }) {
             border: '2px solid #e0e0e0',
             fontSize: '16px',
             boxSizing: 'border-box',
-            transition:  'border-color 0.3s',
+            transition: 'border-color 0.3s',
             outline: 'none'
           }}
           onFocus={(e) => e.target.style.borderColor = '#ffc8b0'}
@@ -114,18 +120,21 @@ export default function LicenseCheck({ onUnlock }) {
             background: '#fff1f0',
             padding: '10px',
             borderRadius:  '8px',
-            border:  '1px solid #ffccc7'
+            border: '1px solid #ffccc7'
           }}>
             ⚠️ {error}
           </p>
         )}
         
         <button
-          onClick={handleSubmit}
+          onClick={() => {
+            console.log('🖱️ Button clicked! ');
+            handleSubmit();
+          }}
           style={{
             width: '100%',
             padding: '15px',
-            background: 'linear-gradient(135deg, #e0eff2 0%, #abd3db 100%)',  // ✅ Fixed: removed double ##
+            background: 'linear-gradient(135deg, #e0eff2 0%, #abd3db 100%)',
             color: 'white',
             border: 'none',
             borderRadius: '10px',
@@ -133,15 +142,15 @@ export default function LicenseCheck({ onUnlock }) {
             fontSize: '16px',
             fontWeight: 'bold',
             transition: 'transform 0.2s, box-shadow 0.2s',
-            boxShadow:  '0 4px 15px rgba(0, 0, 0, 0.4)'  // ✅ Fixed: changed 4 to 0.4
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.4)'
           }}
           onMouseOver={(e) => {
-            e. target.style.transform = 'translateY(-2px)';
-            e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.6)';  // ✅ Fixed: changed 4 to 0.6
+            e.target. style.transform = 'translateY(-2px)';
+            e.target.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.6)';
           }}
           onMouseOut={(e) => {
             e.target.style.transform = 'translateY(0)';
-            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.4)';  // ✅ Fixed: changed 4 to 0.4
+            e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.4)';
           }}
         >
           🔓 Unlock Access
