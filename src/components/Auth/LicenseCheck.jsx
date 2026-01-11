@@ -28,7 +28,7 @@ export default function LicenseCheck({ onUnlock }) {
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
-      background: `linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('/marble.png')`,`,
+      background: `linear-gradient(-45deg, #ffc0b0, #ffedb0, #beffb0, ##b0ffe2),`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       fontFamily: 'sans-serif'
