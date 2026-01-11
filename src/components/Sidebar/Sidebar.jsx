@@ -39,7 +39,7 @@ export default function Sidebar({
       overflowY: "auto",
       borderRight: "1px solid #ddd"
     }}>
-      <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>
+      <h2 style={{ fontSize: '20px', fontWeight:  'bold', marginBottom: '10px' }}>
         Designer
       </h2>
 
@@ -52,12 +52,12 @@ export default function Sidebar({
           borderRadius: '8px',
           border: '1px solid #eee'
         }}>
-          <button onClick={onToggleLock} style={STYLES.actionBtn}>
+          <button onClick={onToggleLock} style={STYLES. actionBtn}>
             {selectedBlock?. locked ? "🔓 Unlock" : "🔒 Lock"}
           </button>
           <button
             onClick={onDeleteBlock}
-            style={{ ...STYLES.actionBtn, background: '#ff4d4f', marginTop: '5px' }}
+            style={{ ... STYLES.actionBtn, background: '#ff4d4f', marginTop: '5px' }}
           >
             🗑️ Delete
           </button>
@@ -68,25 +68,17 @@ export default function Sidebar({
       <SectionTitle>Planner Background</SectionTitle>
       <ButtonGroup items={LIBRARY_ITEMS. backgrounds} onClick={onChangeBackground} />
       <button
-        onClick={() => onChangeBackground(currentPage. bg, true)}
-        style={{
-          ...STYLES.smallBtn,
-          width: '100%',
-          background: '#ffc8b0',
-          marginBottom: '15px'
-        }}
-      >
-      <button
         onClick={() => onChangeBackground(currentPage.bg, true)}
         style={{
           ...STYLES.smallBtn,
           width: '100%',
           background: '#ffede6',
-          color: '#f7b292',  // ✅ Add this - dark blue text
+          color: '#f7b292',
+          fontWeight: 'bold',
           marginBottom: '15px'
         }}
       >
-        Apply Background to ALL
+        📋 Apply Background to ALL
       </button>
 
       {/* Page Management */}
@@ -108,10 +100,10 @@ export default function Sidebar({
           width: '100%',
           padding: '10px',
           background: '#ffc8b0',
-          color:  'white',
-          border:  'none',
-          borderRadius:  '4px',
-          fontWeight: 'bold',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          fontWeight:  'bold',
           marginBottom: '10px',
           cursor: 'pointer'
         }}
@@ -141,10 +133,10 @@ export default function Sidebar({
         Monday Start Weekday Header
       </LibraryBtn>
       <div style={{
-        display: "grid",
+        display:  "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
         gap: "2px",
-        marginTop: '5px'
+        marginTop:  '5px'
       }}>
         {MONTH_NAMES.map(m => (
           <button
@@ -211,7 +203,7 @@ export default function Sidebar({
             onClick={() => onAddMonthBundle(m. toUpperCase())}
             style={{
               padding: '8px 4px',
-              background: '#ffc8b0',
+              background:  '#ffc8b0',
               border: '1px solid #ffede6',
               cursor:  'pointer',
               fontSize:  '10px',
@@ -220,14 +212,14 @@ export default function Sidebar({
               color: '#ffffff'
             }}
           >
-            {m.toUpperCase()}
+            {m. toUpperCase()}
           </button>
         ))}
       </div>
 
       {/* Full Page Templates */}
       <SectionTitle>Full Page Templates</SectionTitle>
-      <LibraryBtn onClick={() => onApplyStarter('annualplantemp.svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('annualplantemp. svg')}>
         Annual Planner
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monstartyearoverviewtemp.svg')}>
@@ -239,7 +231,7 @@ export default function Sidebar({
       <LibraryBtn onClick={() => onApplyStarter('monstartweekplantemp.svg')}>
         Monday Start Weekly Plan
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('sunstartweekplantemp.svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('sunstartweekplantemp. svg')}>
         Sunday Start Weekly Plan
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monstartweektemp.svg')}>
@@ -251,7 +243,7 @@ export default function Sidebar({
       <LibraryBtn onClick={() => onApplyStarter('monthreviewtemp.svg')}>
         Monthly Review
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('taskplannertemp.svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('taskplannertemp. svg')}>
         Task Planner
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('listplannertemp.svg')}>
@@ -270,7 +262,7 @@ export default function Sidebar({
 
       {/* Note Templates */}
       <SectionTitle>Note Templates</SectionTitle>
-      <ButtonGroup items={LIBRARY_ITEMS.notes} onClick={(id) => onAddBlock(id, "full")} />
+      <ButtonGroup items={LIBRARY_ITEMS. notes} onClick={(id) => onAddBlock(id, "full")} />
 
       {/* Half Page Blocks */}
       <SectionTitle>Half Page Blocks</SectionTitle>
@@ -290,12 +282,12 @@ export default function Sidebar({
         disabled={isExporting}
         style={{
           ...STYLES.exportBtn,
-          opacity: isExporting ? 0.6 : 1,
-          cursor: isExporting ?  'not-allowed' : 'pointer'
+          opacity: isExporting ? 0.6 :  1,
+          cursor: isExporting ? 'not-allowed' : 'pointer'
         }}
         title={isExporting ? "Export in progress..." : "Export all pages to PDF"}
       >
-        {isExporting ? "⏳ Exporting..." :  "💾 EXPORT PDF BATCH"}
+        {isExporting ?  "⏳ Exporting..." : "💾 EXPORT PDF BATCH"}
       </button>
 
       {/* Master Merge Section */}
