@@ -27,7 +27,7 @@ export { LIBRARY_ITEMS } from './libraryItems';
 // Month names
 export const MONTH_NAMES = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
-// Styles
+// Button and component styles
 export const STYLES = {
   actionBtn: {
     width: '100%',
@@ -50,27 +50,49 @@ export const STYLES = {
   exportBtn: {
     padding: '14px',
     background: '#4f46e5',
-    color:  'white',
-    border:  'none',
+    color: 'white',
+    border: 'none',
     borderRadius: '8px',
-    fontWeight: 'bold',
-    width: '100%',
-    cursor: 'pointer',
+    fontWeight:  'bold',
+    width:  '100%',
+    cursor:  'pointer',
     marginTop: '10px',
     fontSize: '12px'
   }
 };
 
-// Toggle button style function
+// Style functions
 export const toggleBtn = (isActive) => ({
   padding: '8px 16px',
   fontSize: '11px',
   cursor: 'pointer',
-  background: isActive ?  '#4f46e5' :  '#fff',
+  background: isActive ? '#4f46e5' : '#fff',
   color: isActive ? '#fff' : '#333',
   border: '1px solid #ddd',
   borderRadius: '4px',
   fontWeight: isActive ? 'bold' : 'normal',
   flex: 1,
+  transition: 'all 0.2s'
+});
+
+export const moveBtn = {
+  background: 'none',
+  border: 'none',
+  fontSize: '9px',
+  cursor: 'pointer',
+  opacity: 0.5,
+  padding: '0 5px',
+  transition: 'opacity 0.2s'
+};
+
+export const pageBtn = (active) => ({
+  width: '100%',
+  padding: '8px',
+  textAlign: 'left',
+  background: active ? '#f8fafc' :  'transparent',
+  color:  active ? '#4f46e5' : '#444',
+  border: 'none',
+  fontSize: '11px',
+  cursor: 'pointer',
   transition: 'all 0.2s'
 });
