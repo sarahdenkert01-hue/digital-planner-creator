@@ -51,9 +51,9 @@ export const LIBRARY_ITEMS = {
   quarter: [
     { id: 'quarterdots.svg', label: 'Dot Grid' },
     { id: 'quartergrid.svg', label: 'Grid' },
-    { id: 'quarterlists.svg', label: 'Lists' },
+    { id: 'quarterlists.svg', label: 'To Do' },
     { id: 'quarternotes.svg', label: 'Notes' },
-    { id: 'quartertodo.svg', label: 'To Do' },
+    { id: 'quartertodo.svg', label: 'Lists' },
     { id: 'quartertodayschedule.svg', label: 'Daily Schedule' },
     { id: 'quarterbraindump', label: 'Brain Dump' }
   ],
