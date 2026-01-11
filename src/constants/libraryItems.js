@@ -28,7 +28,6 @@ export const LIBRARY_ITEMS = {
     { id: 'ceutrackertemp.svg', label: 'CEU Tracker' },
     { id: 'insurancetrackertemp.svg', label: 'Insurance Tracker' },
     { id: 'thoughtlogtemp.svg', label: 'Thought Log' },
-    { id: 'progresstemp.svg', label: 'Progress Notes' },
     { id: 'goalplantemp.svg', label: 'Goal Planner' }
   ],
   
@@ -49,7 +48,7 @@ export const LIBRARY_ITEMS = {
   ],
   
   quarter: [
-    { id: 'quarterdots. svg', label: 'Dot Grid' },
+    { id: 'quarterdots.svg', label: 'Dot Grid' },
     { id: 'quartergrid.svg', label: 'Grid' },
     { id: 'quarterlists.svg', label: 'Lists' },
     { id: 'quarternotes.svg', label: 'Notes' },
@@ -69,7 +68,7 @@ export const LIBRARY_ITEMS = {
     { id: 'smallmoodtracker.svg', label: 'Mood Tracker' },
     { id: 'smallreminder.svg', label: 'Reminder' },
     { id: 'smallwatertracker.svg', label: 'Water Tracker' },
-    { id: 'toppriorities. svg', label: 'Top Priorities' },
+    { id: 'toppriorities.svg', label: 'Top Priorities' },
     { id: 'smallenergy.svg', label: 'Energy Tracker' }
   ]
 };
