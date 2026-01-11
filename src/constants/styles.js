@@ -21,7 +21,7 @@ export const STYLES = {
   actionBtn: {
     width: '100%',
     padding: '10px',
-    background: '#4f46e5',
+    background: '#ffede6',
     color:  'white',
     border:  'none',
     borderRadius: '4px',
@@ -31,8 +31,8 @@ export const STYLES = {
   smallBtn: {
     flex: 1,
     padding:  '8px',
-    background: '#f8f9fa',
-    border: '1px solid #e2e8f0',
+    background: '##ffede6',
+    border: '1px solid ##ffede6',
     borderRadius:  '4px',
     cursor:  'pointer',
     fontSize:  '11px',
@@ -54,9 +54,9 @@ export const STYLES = {
 export const toggleBtn = (isActive) => ({
   flex: 1,
   padding:  '8px',
-  background: isActive ? '#4f46e5' : '#f8f9fa',
+  background: isActive ? '#ffc8b0' : '##fff6f2',
   color: isActive ? 'white' : '#333',
-  border: '1px solid #e2e8f0',
+  border: '1px solid ##ffede6',
   borderRadius:  '4px',
   cursor:  'pointer',
   fontSize:  '11px',
@@ -66,7 +66,7 @@ export const toggleBtn = (isActive) => ({
 export const pageBtn = (isActive) => ({
   padding: '10px',
   fontSize: '11px',
-  color: isActive ? '#4f46e5' : '#333',
+  color: isActive ? '#ffc8b0' : '#333',
   fontWeight: isActive ? 'bold' : 'normal',
 });
 
@@ -82,7 +82,7 @@ export const moveBtn = {
 export const headerGridBtn = {
   padding: '6px 4px',
   background: '#fff',
-  border: '1px solid #e2e8f0',
+  border: '1px solid #ffede6',
   cursor: 'pointer',
   fontSize: '9px',
   borderRadius: '2px',
@@ -91,7 +91,7 @@ export const headerGridBtn = {
 export const libBtn = {
   padding: '10px',
   background: '#fff',
-  border: '1px solid #e2e8f0',
+  border: '1px solid ##ffede6',
   cursor: 'pointer',
   fontSize: '11px',
   borderRadius: '4px',
