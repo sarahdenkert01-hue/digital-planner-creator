@@ -32,8 +32,8 @@ export const STYLES = {
   actionBtn: {
     width: '100%',
     padding: '8px',
-    borderRadius: '4px',
-    border: '1px solid #ddd',
+    borderRadius:  '4px',
+    border:  '1px solid #ddd',
     cursor: 'pointer',
     fontSize: '11px',
     background: '#fff'
@@ -48,8 +48,8 @@ export const STYLES = {
     borderRadius: '4px'
   },
   exportBtn: {
-    padding: '14px',
-    background: '#ffc8b0',
+    padding:  '14px',
+    background:  '#ffc8b0',
     color: 'white',
     border: 'none',
     borderRadius: '8px',
@@ -67,11 +67,11 @@ export const toggleBtn = (isActive) => ({
   fontSize: '11px',
   cursor: 'pointer',
   background: isActive ? '#ffc8b0' : '#fff',
-  color: isActive ? '#fff' : '#333',
+  color: isActive ? '#fff' :  '#333',
   border: '1px solid #fae2d7',
   borderRadius: '4px',
-  fontWeight: isActive ? 'bold' : 'normal',
-  flex: 1,
+  fontWeight:  isActive ? 'bold' :  'normal',
+  flex:  1,
   transition: 'all 0.2s'
 });
 
@@ -82,7 +82,7 @@ export const moveBtn = {
   cursor: 'pointer',
   opacity: 0.5,
   padding: '0 5px',
-  transition: 'opacity 0.2s'
+  transition:  'opacity 0.2s'
 };
 
 export const pageBtn = (active) => ({
@@ -90,7 +90,7 @@ export const pageBtn = (active) => ({
   padding: '8px',
   textAlign: 'left',
   background: active ? '#fae2d7' :  'transparent',
-  color:  active ? '#ffc8b0' : '##ffede6,
+  color:  active ? '#ffc8b0' : '#ffede6',  // ✅ Fixed: single #, proper quote
   border: 'none',
   fontSize: '11px',
   cursor: 'pointer',
