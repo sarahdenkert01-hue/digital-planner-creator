@@ -48,7 +48,7 @@ export default function Sidebar({
         <div style={{
           marginBottom: '20px',
           padding: '10px',
-          background: '#ffecde',
+          background: '#ffede6',
           borderRadius: '8px',
           border: '1px solid #eee'
         }}>
@@ -202,7 +202,7 @@ export default function Sidebar({
             style={{
               padding: '8px 4px',
               background: '#ffc8b0',
-              border: '1px solid #fae2d7',
+              border: '1px solid ##ffede6',
               cursor:  'pointer',
               fontSize:  '10px',
               borderRadius: '4px',
