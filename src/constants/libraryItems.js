@@ -37,6 +37,7 @@ export const LIBRARY_ITEMS = {
     { id: 'linedottemp.svg', label: 'Lined Dot Notes' },
     { id: 'dotlinetemp.svg', label: 'Dot Lined Notes' },
     { id: 'notetemp.svg', label: 'Standard Notes' }
+    { id: 'topicnotetemp.svg', label: 'Topic Notes' }
   ],
   
   halfPage: [
