@@ -1,5 +1,4 @@
 import React from 'react';
-import PageList from './PageList';
 import LibrarySection from './LibrarySection';
 import SectionTitle from './SectionTitle';
 import LibraryBtn from './LibraryBtn';
@@ -11,20 +10,11 @@ export default function Sidebar({
   selectedId,
   selectedBlock,
   currentPage,
-  pages,
-  currentPageIndex,
   startDay,
   isExporting,
   onToggleLock,
   onDeleteBlock,
   onChangeBackground,
-  onAddBlankPage,
-  onDuplicatePage,
-  onClearPage,
-  onApplyLayoutToNext,
-  onMovePage,
-  onRenamePage,
-  onSetCurrentPage,
   onAddBlock,
   onApplyStarter,
   onSetStartDay,
@@ -80,45 +70,6 @@ export default function Sidebar({
       >
         📋 Apply Background to ALL
       </button>
-
-      {/* Page Management */}
-      <SectionTitle>Page Management</SectionTitle>
-      <div style={{ display: 'flex', gap: '5px', marginBottom: '5px' }}>
-        <button onClick={onAddBlankPage} style={STYLES.smallBtn}>
-          ➕ Add
-        </button>
-        <button onClick={onDuplicatePage} style={STYLES.smallBtn}>
-          👯 Copy
-        </button>
-        <button onClick={onClearPage} style={{ ...STYLES.smallBtn, color: '#ff4d4f' }}>
-          🧹 Clear
-        </button>
-      </div>
-      <button
-        onClick={onApplyLayoutToNext}
-        style={{
-          width: '100%',
-          padding: '10px',
-          background: '#ffc8b0',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          fontWeight:  'bold',
-          marginBottom: '10px',
-          cursor: 'pointer'
-        }}
-      >
-        Apply Layout to Next →
-      </button>
-
-      {/* Page List */}
-      <PageList
-        pages={pages}
-        currentPageIndex={currentPageIndex}
-        onMovePage={onMovePage}
-        onSetCurrentPage={onSetCurrentPage}
-        onRenamePage={onRenamePage}
-      />
 
       {/* Planner Covers */}
       <SectionTitle>Planner Cover</SectionTitle>
