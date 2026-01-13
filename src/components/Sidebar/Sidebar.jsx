@@ -29,16 +29,16 @@ export default function Sidebar({
       overflowY: "auto",
       borderRight: "1px solid #ddd"
     }}>
-      <h2 style={{ fontSize: '20px', fontWeight:  'bold', marginBottom: '10px' }}>
+      <h2 style={{ fontSize:  '20px', fontWeight:  'bold', marginBottom: '10px' }}>
         Designer
       </h2>
 
       {/* Selected Block Actions */}
       {selectedId && (
         <div style={{
-          marginBottom: '20px',
-          padding: '10px',
-          background: '#ffede6',
+          marginBottom:  '20px',
+          padding:  '10px',
+          background:  '#ffede6',
           borderRadius: '8px',
           border: '1px solid #eee'
         }}>
@@ -74,20 +74,20 @@ export default function Sidebar({
       {/* Planner Covers */}
       <SectionTitle>Planner Cover</SectionTitle>
       <ButtonGroup items={LIBRARY_ITEMS.covers} onClick={(id) => onAddBlock(id, "cover")} />
-    </div>
 
+      {/* Month Bundles */}
       <SectionTitle>Month Bundles</SectionTitle>
-      <p style={{ fontSize: '10px', color: '#ffc8b0', marginBottom: '8px', lineHeight: '1.4' }}>
-        Click to creates a complete monthly spread: Month Overview + 5 Weeks + 31 Days. Important: Do not rearrange these spreads, it will break the hyperlink process.
+      <p style={{ fontSize: '10px', color: '#ffc8b0', marginBottom: '8px', lineHeight:  '1.4' }}>
+        Click to create a complete monthly spread: Month Overview + 5 Weeks + 31 Days. Important: Do not rearrange these spreads, it will break the hyperlink process.
       </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px", marginBottom: '15px' }}>
         {MONTH_NAMES.map(m => (
           <button
             key={m}
             onClick={() => onAddMonthBundle(m. toUpperCase())}
             style={{
               padding: '8px 4px',
-              background:  '#ffc8b0',
+              background:   '#ffc8b0',
               border: '1px solid #ffede6',
               cursor:  'pointer',
               fontSize:  '10px',
@@ -96,24 +96,28 @@ export default function Sidebar({
               color: '#ffffff'
             }}
           >
-            {m. toUpperCase()}
+            {m.toUpperCase()}
           </button>
         ))}
       </div>
 
       {/* Headers Section */}
       <SectionTitle>Headers</SectionTitle>
-      After you have added your monthly spread, choose either Sunday Start or Monday Start below to place weekday headers on your monthly calendar. 
-      <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg", "weekheader")}>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
+        After you have added your monthly spread, choose either Sunday Start or Monday Start below to place weekday headers on your monthly calendar. 
+      </p>
+      <LibraryBtn onClick={() => onAddBlock("sunstartheader. svg", "weekheader")}>
         Sunday Start Weekday Header
+      </LibraryBtn>
       <LibraryBtn onClick={() => onAddBlock("monstartheader.svg", "weekheader")}>
         Monday Start Weekday Header
       </LibraryBtn>
-      </div>
 
       {/* Full Page Templates */}
-      Select a template below to add to a page. 
       <SectionTitle>Full Page Templates</SectionTitle>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
+        Select a template below to add to a page.
+      </p>
       <LibraryBtn onClick={() => onApplyStarter('annualplantemp.svg')}>
         Annual Planner
       </LibraryBtn>
@@ -141,13 +145,13 @@ export default function Sidebar({
       <LibraryBtn onClick={() => onApplyStarter('taskplannertemp.svg')}>
         Task Planner
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('listplannertemp.svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('listplannertemp. svg')}>
         To Do Planner
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('weektodotemp.svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('weektodotemp. svg')}>
         Weekly To-Do
       </LibraryBtn>
-      <LibraryBtn onClick={() => onApplyStarter('yearpixelstemp.svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('yearpixelstemp. svg')}>
         Year in Pixels
       </LibraryBtn>
 
@@ -177,12 +181,12 @@ export default function Sidebar({
         disabled={isExporting}
         style={{
           ...STYLES.exportBtn,
-          opacity: isExporting ? 0.6 :  1,
+          opacity: isExporting ? 0.6 :   1,
           cursor: isExporting ? 'not-allowed' : 'pointer'
         }}
         title={isExporting ? "Export in progress..." : "Export all pages to PDF"}
       >
-        {isExporting ?  "⏳ Exporting..." : "💾 EXPORT PDF BATCH"}
+        {isExporting ?   "⏳ Exporting..." : "💾 EXPORT PDF BATCH"}
       </button>
 
       {/* Master Merge Section */}
