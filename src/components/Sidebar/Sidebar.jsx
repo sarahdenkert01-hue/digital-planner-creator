@@ -74,78 +74,11 @@ export default function Sidebar({
       {/* Planner Covers */}
       <SectionTitle>Planner Cover</SectionTitle>
       <ButtonGroup items={LIBRARY_ITEMS.covers} onClick={(id) => onAddBlock(id, "cover")} />
-
-      {/* Headers Section */}
-      <SectionTitle>Headers</SectionTitle>
-      <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg", "weekheader")}>
-        Sunday Start Weekday Header
-      </LibraryBtn>
-      <LibraryBtn onClick={() => onAddBlock("monstartheader.svg", "weekheader")}>
-        Monday Start Weekday Header
-      </LibraryBtn>
-      <div style={{
-        display:  "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: "2px",
-        marginTop:  '5px'
-      }}>
-        {MONTH_NAMES.map(m => (
-          <button
-            key={m}
-            onClick={() => onAddBlock(`${m}header.svg`, "header")}
-            style={{
-              padding: '6px 4px',
-              background: '#fff',
-              border: '1px solid #ffc8b0',
-              cursor: 'pointer',
-              fontSize: '9px',
-              borderRadius: '2px'
-            }}
-          >
-            {m.toUpperCase()}
-          </button>
-        ))}
-      </div>
-
-      {/* Monthly Layouts */}
-      <SectionTitle>Monthly Layouts</SectionTitle>
-      <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
-        <button
-          onClick={() => onSetStartDay("sunday")}
-          style={toggleBtn(startDay === "sunday")}
-        >
-          Sun Start
-        </button>
-        <button
-          onClick={() => onSetStartDay("monday")}
-          style={toggleBtn(startDay === "monday")}
-        >
-          Mon Start
-        </button>
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
-        {MONTH_NAMES.map(m => (
-          <button
-            key={m}
-            onClick={() => onAddBlock(`${m}${startDay}start.svg`, "calendar")}
-            style={{
-              padding: '10px',
-              background: '#fff',
-              border: '1px solid #ffc8b0',
-              cursor: 'pointer',
-              fontSize: '11px',
-              borderRadius: '4px',
-              textAlign: 'center'
-            }}
-          >
-            {m.toUpperCase()}
-          </button>
-        ))}
-      </div>
+    </div>
 
       <SectionTitle>Month Bundles</SectionTitle>
       <p style={{ fontSize: '10px', color: '#ffc8b0', marginBottom: '8px', lineHeight: '1.4' }}>
-        Creates complete month package:  Overview + 5 Weeks + 31 Days
+        Click to creates a complete monthly spread: Month Overview + 5 Weeks + 31 Days. Important: Do not rearrange these spreads, it will break the hyperlink process.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px" }}>
         {MONTH_NAMES.map(m => (
@@ -168,7 +101,18 @@ export default function Sidebar({
         ))}
       </div>
 
+      {/* Headers Section */}
+      <SectionTitle>Headers</SectionTitle>
+      After you have added your monthly spread, choose either Sunday Start or Monday Start below to place weekday headers on your monthly calendar. 
+      <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg", "weekheader")}>
+        Sunday Start Weekday Header
+      <LibraryBtn onClick={() => onAddBlock("monstartheader.svg", "weekheader")}>
+        Monday Start Weekday Header
+      </LibraryBtn>
+      </div>
+
       {/* Full Page Templates */}
+      Select a template below to add to a page. 
       <SectionTitle>Full Page Templates</SectionTitle>
       <LibraryBtn onClick={() => onApplyStarter('annualplantemp.svg')}>
         Annual Planner
