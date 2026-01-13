@@ -11,6 +11,8 @@ export default function PlannerCanvas({
   selectedId,
   onSelectBlock,
   onUpdateBlock,
+  onToggleLock,   // ADD THIS
+  onDeleteBlock,  // ADD THIS
   stageRef
 }) {
   const [bgImg, bgStatus] = useImage(currentPage?. bg ?  `/${currentPage.bg}` : null, 'anonymous');
@@ -39,7 +41,7 @@ export default function PlannerCanvas({
   return (
     <div style={{
       flex: 1,
-      display:  'flex',
+      display: 'flex',
       justifyContent: 'center',
       alignItems: 'flex-start',
       padding: '20px',
@@ -48,7 +50,7 @@ export default function PlannerCanvas({
     }}>
       <div style={{
         width: WIDTH * VIEW_SCALE,
-        height: HEIGHT * VIEW_SCALE,
+        height:  HEIGHT * VIEW_SCALE,
         boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
         background: 'white',
         position: 'relative',
@@ -58,7 +60,7 @@ export default function PlannerCanvas({
           transform: `scale(${VIEW_SCALE})`,
           transformOrigin: 'top left',
           width: WIDTH,
-          height: HEIGHT
+          height:  HEIGHT
         }}>
           <Stage
             width={WIDTH}
@@ -86,8 +88,10 @@ export default function PlannerCanvas({
                   key={block.id}
                   block={block}
                   isSelected={block.id === selectedId}
-                  onSelect={() => onSelectBlock(block. id)}
+                  onSelect={() => onSelectBlock(block.id)}
                   onChange={onUpdateBlock}
+                  onToggleLock={onToggleLock}      // ADD THIS
+                  onDelete={onDeleteBlock}         // ADD THIS
                 />
               ))}
             </Layer>
