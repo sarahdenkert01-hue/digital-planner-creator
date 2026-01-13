@@ -77,7 +77,7 @@ export default function Sidebar({
 
       {/* Month Bundles */}
       <SectionTitle>Month Bundles</SectionTitle>
-      <p style={{ fontSize: '10px', color: '#ffc8b0', marginBottom: '8px', lineHeight:  '1.4' }}>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight:  '1.4' }}>
         Click to create a complete monthly spread: Month Overview + 5 Weeks + 31 Days. Important: Do not rearrange these spreads, it will break the hyperlink process.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px", marginBottom: '15px' }}>
