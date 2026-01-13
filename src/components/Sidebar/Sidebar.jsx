@@ -100,7 +100,7 @@ export default function Sidebar({
 
       <SectionTitle>Adding Additional Pages</SectionTitle>
       <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
-        In Page Management, click Add. A blank page will be added. Choose from any of the templates below to customize your page. If you want to duplicate a page you've created, click Duplicate in Page Managment. If you want to delete a layout or block on the page, click on it to select, and a lock/unlock button and delete button will show at the top of the Designer Sidebar. Click delete to remove. To lock an element, click lock. To unlock, click unlock. 
+        In Page Management, click Add. A blank page will be added. Choose from any of the templates below to customize your page. If you want to duplicate a page you've created, click Duplicate in Page Managment.
       </p>
       
       {/* Full Page Templates */}
