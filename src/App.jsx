@@ -421,6 +421,8 @@ export default function App() {
                     isSelected={block.id === selectedId}
                     onSelect={() => setSelectedId(block. id)}
                     onChange={updateBlock}
+                    onToggleLock={toggleLock}      
+                    onDelete={deleteBlock}
                   />
                 ))}
               </Layer>
