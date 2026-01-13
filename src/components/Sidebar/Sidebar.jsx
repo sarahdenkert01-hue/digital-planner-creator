@@ -219,7 +219,7 @@ export default function Sidebar({
 
       {/* Full Page Templates */}
       <SectionTitle>Full Page Templates</SectionTitle>
-      <LibraryBtn onClick={() => onApplyStarter('annualplantemp. svg')}>
+      <LibraryBtn onClick={() => onApplyStarter('annualplantemp.svg')}>
         Annual Planner
       </LibraryBtn>
       <LibraryBtn onClick={() => onApplyStarter('monstartyearoverviewtemp.svg')}>
