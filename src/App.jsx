@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Stage, Layer, Rect, Image as KonvaImage } from 'react-konva';
 import useImage from 'use-image';
 import Sidebar from './components/Sidebar/Sidebar';
+import RightSidebar from './components/Sidebar/RightSidebar';
 import ExportProgress from './components/Export/ExportProgress';
 import LicenseCheck from './components/Auth/LicenseCheck';
 import ImageBlock from './components/Canvas/ImageBlock';
@@ -363,20 +364,11 @@ export default function App() {
         selectedId={selectedId}
         selectedBlock={selectedBlock}
         currentPage={currentPage}
-        pages={pages}
-        currentPageIndex={currentPageIndex}
         startDay={startDay}
         isExporting={isExporting}
         onToggleLock={toggleLock}
         onDeleteBlock={deleteBlock}
         onChangeBackground={changeBackground}
-        onAddBlankPage={addBlankPage}
-        onDuplicatePage={duplicatePage}
-        onClearPage={clearPage}
-        onApplyLayoutToNext={applyLayoutToNext}
-        onMovePage={movePage}
-        onRenamePage={renamePage}
-        onSetCurrentPage={setCurrentPageIndex}
         onAddBlock={addBlock}
         onApplyStarter={applyStarter}
         onSetStartDay={setStartDay}
@@ -436,6 +428,18 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      <RightSidebar
+        pages={pages}
+        currentPageIndex={currentPageIndex}
+        onAddBlankPage={addBlankPage}
+        onDuplicatePage={duplicatePage}
+        onClearPage={clearPage}
+        onApplyLayoutToNext={applyLayoutToNext}
+        onMovePage={movePage}
+        onSetCurrentPage={setCurrentPageIndex}
+        onRenamePage={renamePage}
+      />
     </div>
   );
 }
