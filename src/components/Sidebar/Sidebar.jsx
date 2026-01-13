@@ -175,6 +175,12 @@ export default function Sidebar({
       <SectionTitle>1/8 Page Blocks</SectionTitle>
       <ButtonGroup items={LIBRARY_ITEMS.eighth} onClick={(id) => onAddBlock(id, "1/8")} />
 
+      {/* Export Section - ADD THIS */}
+      <SectionTitle>Export PDF 📄</SectionTitle>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom:  '8px', lineHeight: '1.4' }}>
+        For best results with exporting your planner, please export in small batches. i.e. Jan-Mar, Apr-Jun etc. Once you have your desired batches, use the Master Merge below to combine them into one planner! Hyperlinks will be active once fully exported and merged. 
+      </p>
+
       {/* Export Button */}
       <button
         onClick={onExportPDF}
