@@ -25,7 +25,11 @@ export default function RightSidebar({
       <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>
         Page Management
       </h2>
-
+      
+      <p style={{ fontSize: '10px', color: '#666', marginBottom:  '8px', lineHeight: '1.4' }}>
+        Use the buttons below to manage your planner pages. Once a new page is added, click on it below to rename it. Click and drag to rearrange. Note: Do not rearrange pages within a monthly spread. 
+      </p>
+      
       {/* Page Management Buttons */}
       <div style={{ display: 'flex', gap: '5px', marginBottom: '5px' }}>
         <button onClick={onAddBlankPage} style={STYLES.smallBtn}>
