@@ -56,6 +56,9 @@ export default function Sidebar({
 
       {/* Background Section */}
       <SectionTitle>Planner Background</SectionTitle>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
+        Select a background for your planner. To apply your chosen background to all pages, click the button below! 
+      </p>
       <ButtonGroup items={LIBRARY_ITEMS. backgrounds} onClick={onChangeBackground} />
       <button
         onClick={() => onChangeBackground(currentPage.bg, true)}
@@ -73,12 +76,15 @@ export default function Sidebar({
 
       {/* Planner Covers */}
       <SectionTitle>Planner Cover</SectionTitle>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
+        Choose a cover for your planner.
+      </p>
       <ButtonGroup items={LIBRARY_ITEMS.covers} onClick={(id) => onAddBlock(id, "cover")} />
 
       {/* Month Bundles */}
       <SectionTitle>Month Bundles</SectionTitle>
       <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight:  '1.4' }}>
-        Click to create a complete monthly spread: Month Overview + 5 Weeks + 31 Days. Important: Do not rearrange these spreads, it will break the hyperlink process.
+        Click to create a complete monthly spread: Month Overview + 5 Weeks + 31 Days. Once you have created a monthly spread, go to Page Management to the right of your planner. You will see the pages of the spread have been added. Click on a page in the spread to customize. Important: Do not rearrange the pages within these spreads, it will break the hyperlink process.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "4px", marginBottom: '15px' }}>
         {MONTH_NAMES.map(m => (
@@ -104,7 +110,7 @@ export default function Sidebar({
       {/* Headers Section */}
       <SectionTitle>Headers</SectionTitle>
       <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
-        After you have added your monthly spread, choose either Sunday Start or Monday Start below to place weekday headers on your monthly calendar. 
+        To add weekday headers to your Monthly Overview page, click on the corresponding page in Page Management then choose Sunday Start or Monday Start.
       </p>
       <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg", "weekheader")}>
         Sunday Start Weekday Header
@@ -113,6 +119,11 @@ export default function Sidebar({
         Monday Start Weekday Header
       </LibraryBtn>
 
+      <SectionTitle>Adding Additional Pages</SectionTitle>
+      <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
+        In Page Management, click Add. A blank page will be added. Choose from any of the templates below to customize your page. If you want to duplicate a page you've created, click Duplicate in Page Managment. If you want to delete a layout or block on the page, click on it to select, and a lock/unlock button and delete button will show at the top of the Designer Sidebar. Click delete to remove. To lock an element, click lock. To unlock, click unlock. 
+      </p>
+      
       {/* Full Page Templates */}
       <SectionTitle>Full Page Templates</SectionTitle>
       <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
