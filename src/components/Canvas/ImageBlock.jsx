@@ -1,14 +1,14 @@
 import React, { useRef, useEffect } from 'react';
-import { Image, Transformer } from 'react-konva';
+import { Image, Transformer, Text } from 'react-konva';
 import useImage from 'use-image';
 
-const ImageBlock = React.memo(({ block, isSelected, onSelect, onChange }) => {
+const ImageBlock = React.memo(({ block, isSelected, onSelect, onChange, onToggleLock, onDelete }) => {
   const [img, status] = useImage(block.src, "anonymous");
   const shapeRef = useRef();
   const trRef = useRef();
 
   useEffect(() => {
-    if (isSelected && trRef.current && shapeRef.current && status === 'loaded' && ! block.locked) {
+    if (isSelected && trRef.current && shapeRef. current && status === 'loaded' && ! block.locked) {
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
@@ -25,7 +25,7 @@ const ImageBlock = React.memo(({ block, isSelected, onSelect, onChange }) => {
         y={block.y}
         width={block.width}
         height={block.height}
-        draggable={! block.locked}
+        draggable={!block.locked}
         ref={shapeRef}
         onClick={onSelect}
         onDragEnd={(e) => onChange({ ...block, x: e.target.x(), y: e.target.y() })}
@@ -40,13 +40,58 @@ const ImageBlock = React.memo(({ block, isSelected, onSelect, onChange }) => {
             x: node.x(),
             y: node.y(),
             width: Math.max(5, node.width() * scaleX),
-            height: Math. max(5, node.height() * scaleY),
+            height: Math.max(5, node.height() * scaleY),
           });
         }}
         opacity={block.locked ? 0.9 : 1}
       />
-      {isSelected && status === 'loaded' && ! block.locked && (
+      {isSelected && status === 'loaded' && !block.locked && (
         <Transformer ref={trRef} keepRatio={true} />
+      )}
+      
+      {/* Simple corner icons - ADD THIS SECTION */}
+      {isSelected && status === 'loaded' && (
+        <>
+          {/* Lock icon - top-right corner */}
+          <Text
+            text={block.locked ? '🔒' : '🔓'}
+            fontSize={20}
+            x={block.x + block.width - 25}
+            y={block.y - 25}
+            onClick={(e) => {
+              e.cancelBubble = true;
+              onToggleLock();
+            }}
+            onTap={(e) => {
+              e.cancelBubble = true;
+              onToggleLock();
+            }}
+            shadowColor="white"
+            shadowBlur={3}
+            shadowOpacity={1}
+            listening={true}
+          />
+          
+          {/* Delete icon - top-left corner */}
+          <Text
+            text="🗑️"
+            fontSize={20}
+            x={block.x - 25}
+            y={block.y - 25}
+            onClick={(e) => {
+              e.cancelBubble = true;
+              onDelete();
+            }}
+            onTap={(e) => {
+              e.cancelBubble = true;
+              onDelete();
+            }}
+            shadowColor="white"
+            shadowBlur={3}
+            shadowOpacity={1}
+            listening={true}
+          />
+        </>
       )}
     </React.Fragment>
   );
