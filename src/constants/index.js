@@ -90,7 +90,7 @@ export const pageBtn = (active) => ({
   padding: '8px',
   textAlign: 'left',
   background: active ? '#fae2d7' :  'transparent',
-  color:  active ? '#ffc8b0' : '#ffede6',  // ✅ Fixed: single #, proper quote
+  color: active ? '#000000' : '#666666',  // Black for active, gray for inactive
   border: 'none',
   fontSize: '11px',
   cursor: 'pointer',
