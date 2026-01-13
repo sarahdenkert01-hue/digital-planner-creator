@@ -33,27 +33,6 @@ export default function Sidebar({
         Designer
       </h2>
 
-      {/* Selected Block Actions */}
-      {selectedId && (
-        <div style={{
-          marginBottom:  '20px',
-          padding:  '10px',
-          background:  '#ffede6',
-          borderRadius: '8px',
-          border: '1px solid #eee'
-        }}>
-          <button onClick={onToggleLock} style={STYLES. actionBtn}>
-            {selectedBlock?. locked ? "🔓 Unlock" : "🔒 Lock"}
-          </button>
-          <button
-            onClick={onDeleteBlock}
-            style={{ ... STYLES.actionBtn, background: '#ff4d4f', marginTop: '5px' }}
-          >
-            🗑️ Delete
-          </button>
-        </div>
-      )}
-
       {/* Background Section */}
       <SectionTitle>Planner Background</SectionTitle>
       <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
