@@ -106,7 +106,7 @@ export default function Sidebar({
       <p style={{ fontSize: '10px', color: '#666', marginBottom: '8px', lineHeight: '1.4' }}>
         After you have added your monthly spread, choose either Sunday Start or Monday Start below to place weekday headers on your monthly calendar. 
       </p>
-      <LibraryBtn onClick={() => onAddBlock("sunstartheader. svg", "weekheader")}>
+      <LibraryBtn onClick={() => onAddBlock("sunstartheader.svg", "weekheader")}>
         Sunday Start Weekday Header
       </LibraryBtn>
       <LibraryBtn onClick={() => onAddBlock("monstartheader.svg", "weekheader")}>
