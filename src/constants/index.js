@@ -76,7 +76,8 @@ export const toggleBtn = (isActive) => ({
   borderRadius: '4px',
   fontWeight:  isActive ? 'bold' :  'normal',
   flex:  1,
-  transition: 'all 0.2s'
+  transition: 'all 0.2s',
+  minHeight: '44px'
 });
 
 export const moveBtn = {
@@ -98,5 +99,6 @@ export const pageBtn = (active) => ({
   border: 'none',
   fontSize: '11px',
   cursor: 'pointer',
-  transition: 'all 0.2s'
+  transition: 'all 0.2s',
+  minHeight: '44px'
 });
