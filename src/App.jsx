@@ -372,24 +372,27 @@ export default function App() {
       {isExporting && <ExportProgress progress={progress} onCancel={() => setIsExporting(false)} />}
 
       {/* Sidebar - collapsible on mobile */}
-      {(!isMobile || showLeftSidebar) && (
-        <Sidebar
-          selectedId={selectedId}
-          selectedBlock={selectedBlock}
-          currentPage={currentPage}
-          startDay={startDay}
-          isExporting={isExporting}
-          isMobile={isMobile}
-          onToggleLock={toggleLock}
-          onDeleteBlock={deleteBlock}
-          onChangeBackground={changeBackground}
-          onAddBlock={addBlock}
-          onApplyStarter={applyStarter}
-          onSetStartDay={setStartDay}
-          onExportPDF={exportPDF}
-          onAddMonthBundle={addMonthBundle}
-        />
-      )}
+      {(() => {
+        const shouldShowLeftSidebar = !isMobile || showLeftSidebar;
+        return shouldShowLeftSidebar && (
+          <Sidebar
+            selectedId={selectedId}
+            selectedBlock={selectedBlock}
+            currentPage={currentPage}
+            startDay={startDay}
+            isExporting={isExporting}
+            isMobile={isMobile}
+            onToggleLock={toggleLock}
+            onDeleteBlock={deleteBlock}
+            onChangeBackground={changeBackground}
+            onAddBlock={addBlock}
+            onApplyStarter={applyStarter}
+            onSetStartDay={setStartDay}
+            onExportPDF={exportPDF}
+            onAddMonthBundle={addMonthBundle}
+          />
+        );
+      })()}
 
       {/* Canvas with dynamic scale */}
       <div style={{ 
@@ -461,7 +464,7 @@ export default function App() {
                     key={block.id}
                     block={block}
                     isSelected={block.id === selectedId}
-                    onSelect={() => setSelectedId(block. id)}
+                    onSelect={() => setSelectedId(block.id)}
                     onChange={updateBlock}
                     onToggleLock={toggleLock}      
                     onDelete={deleteBlock}
@@ -474,20 +477,24 @@ export default function App() {
       </div>
 
       {/* Right Sidebar - collapsible on mobile/tablet */}
-      {((!isMobile && !isTablet) || showRightSidebar) && (
-        <RightSidebar
-          pages={pages}
-          currentPageIndex={currentPageIndex}
-          isMobile={isMobile}
-          onAddBlankPage={addBlankPage}
-          onDuplicatePage={duplicatePage}
-          onClearPage={clearPage}
-          onApplyLayoutToNext={applyLayoutToNext}
-          onMovePage={movePage}
-          onSetCurrentPage={setCurrentPageIndex}
-          onRenamePage={renamePage}
-        />
-      )}
+      {(() => {
+        const isDesktop = !isMobile && !isTablet;
+        const shouldShowRightSidebar = isDesktop || showRightSidebar;
+        return shouldShowRightSidebar && (
+          <RightSidebar
+            pages={pages}
+            currentPageIndex={currentPageIndex}
+            isMobile={isMobile}
+            onAddBlankPage={addBlankPage}
+            onDuplicatePage={duplicatePage}
+            onClearPage={clearPage}
+            onApplyLayoutToNext={applyLayoutToNext}
+            onMovePage={movePage}
+            onSetCurrentPage={setCurrentPageIndex}
+            onRenamePage={renamePage}
+          />
+        );
+      })()}
       
       {(isMobile || isTablet) && (
         <button

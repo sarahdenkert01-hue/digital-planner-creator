@@ -67,7 +67,7 @@ export const STYLES = {
 
 // Style functions
 export const toggleBtn = (isActive) => ({
-  padding: '8px 16px',
+  padding: '12px 16px',  // Increased from 8px for better touch targets
   fontSize: '11px',
   cursor: 'pointer',
   background: isActive ? '#ffc8b0' : '#fff',
