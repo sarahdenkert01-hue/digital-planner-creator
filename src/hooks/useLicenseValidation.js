@@ -10,13 +10,6 @@ export function useLicenseValidation() {
     const trimmedKey = licenseInput.trim().toUpperCase();
     console.log('🔑 Trimmed key:', trimmedKey);
     
-    // Temporary bypass for testing
-    if (trimmedKey === 'TEST123') {
-      console.log('✅ Using test bypass key');
-      setError(null);
-      return true;
-    }
-    
     // Get and parse environment variable inside the function
     const rawKeys = import.meta.env.VITE_LICENSE_KEYS;
     console.log('🔑 Raw keys from env:', rawKeys);
@@ -45,7 +38,7 @@ export function useLicenseValidation() {
     // Check if we have any valid keys
     if (! Array.isArray(validKeys) || validKeys.length === 0) {
       console.warn('⚠️ No valid license keys configured');
-      setError('License validation not configured.  Using bypass key "TEST123" for now.');
+      setError('License validation not configured.');
       return false;
     }
     
@@ -59,7 +52,7 @@ export function useLicenseValidation() {
       return true;
     } else {
       console.log('❌ License invalid');
-      setError('Invalid license key. Please try again or use TEST123 for testing.');
+      setError('Invalid license key.');
       return false;
     }
   };
