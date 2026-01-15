@@ -474,7 +474,7 @@ export default function App() {
       </div>
 
       {/* Right Sidebar - collapsible on mobile/tablet */}
-      {(!isMobile && !isTablet || showRightSidebar) && (
+      {((!isMobile && !isTablet) || showRightSidebar) && (
         <RightSidebar
           pages={pages}
           currentPageIndex={currentPageIndex}

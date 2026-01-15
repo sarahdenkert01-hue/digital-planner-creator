@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { CANVAS_CONFIG } from '../constants';
 
+// Layout constants
+const SIDEBAR_WIDTH = 320;
+const DESKTOP_PADDING = 80;
+const MOBILE_PADDING = 40;
+const TABLET_PADDING = 80;
+
 export function useResponsive() {
   const [viewScale, setViewScale] = useState(0.35);
   const [isMobile, setIsMobile] = useState(false);
@@ -23,13 +29,13 @@ export function useResponsive() {
       
       if (mobile) {
         // Full width on mobile, stack sidebars
-        availableWidth = width - 40; // padding
+        availableWidth = width - MOBILE_PADDING;
       } else if (tablet) {
         // Reduce sidebar impact on tablets
-        availableWidth = width - 320 - 80; // one sidebar + padding
+        availableWidth = width - SIDEBAR_WIDTH - TABLET_PADDING;
       } else {
         // Desktop: account for both sidebars
-        availableWidth = width - 640 - 80; // both sidebars + padding
+        availableWidth = width - (SIDEBAR_WIDTH * 2) - DESKTOP_PADDING;
       }
       
       // Calculate scale to fit canvas
