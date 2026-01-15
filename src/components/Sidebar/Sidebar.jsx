@@ -12,6 +12,7 @@ export default function Sidebar({
   currentPage,
   startDay,
   isExporting,
+  isMobile,
   onToggleLock,
   onDeleteBlock,
   onChangeBackground,
@@ -23,11 +24,18 @@ export default function Sidebar({
 }) {
   return (
     <div style={{
-      width: "320px",
+      width: isMobile ? '100vw' : '320px',
+      maxWidth: isMobile ? '100%' : '320px',
       background: "white",
-      padding:  "20px",
+      padding:  isMobile ? '15px' : "20px",
       overflowY: "auto",
-      borderRight: "1px solid #ddd"
+      borderRight: isMobile ? 'none' : "1px solid #ddd",
+      position: isMobile ? 'fixed' : 'relative',
+      top: isMobile ? 0 : 'auto',
+      left: isMobile ? 0 : 'auto',
+      zIndex: isMobile ? 999 : 'auto',
+      height: isMobile ? '100vh' : 'auto',
+      boxShadow: isMobile ? '2px 0 8px rgba(0,0,0,0.1)' : 'none'
     }}>
       <h2 style={{ fontSize:  '20px', fontWeight:  'bold', marginBottom: '10px' }}>
         Designer
