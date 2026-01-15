@@ -8,8 +8,9 @@ import LicenseCheck from './components/Auth/LicenseCheck';
 import ImageBlock from './components/Canvas/ImageBlock';
 import { createBlock } from './utils/blockHelpers';
 import { CANVAS_CONFIG } from './constants';
+import { useResponsive } from './hooks/useResponsive';
 
-const { WIDTH, HEIGHT, VIEW_SCALE } = CANVAS_CONFIG;
+const { WIDTH, HEIGHT } = CANVAS_CONFIG;
 
 export default function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -29,6 +30,10 @@ export default function App() {
   const [startDay, setStartDay] = useState('sunday');
   const [isExporting, setIsExporting] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showLeftSidebar, setShowLeftSidebar] = useState(false);
+  const [showRightSidebar, setShowRightSidebar] = useState(false);
+  
+  const { viewScale, isMobile, isTablet } = useResponsive();
   
   const stageRef = useRef();
   const currentPage = pages[currentPageIndex] || pages[0];
@@ -357,44 +362,84 @@ export default function App() {
     }
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: '#f0f2f5', overflow: 'hidden' }}>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: isMobile ? 'column' : 'row',
+      height: '100vh', 
+      background: '#f0f2f5', 
+      overflow: 'hidden' 
+    }}>
       {isExporting && <ExportProgress progress={progress} onCancel={() => setIsExporting(false)} />}
 
-      <Sidebar
-        selectedId={selectedId}
-        selectedBlock={selectedBlock}
-        currentPage={currentPage}
-        startDay={startDay}
-        isExporting={isExporting}
-        onToggleLock={toggleLock}
-        onDeleteBlock={deleteBlock}
-        onChangeBackground={changeBackground}
-        onAddBlock={addBlock}
-        onApplyStarter={applyStarter}
-        onSetStartDay={setStartDay}
-        onExportPDF={exportPDF}
-        onAddMonthBundle={addMonthBundle}
-      />
+      {/* Sidebar - collapsible on mobile */}
+      {(() => {
+        const shouldShowLeftSidebar = !isMobile || showLeftSidebar;
+        return shouldShowLeftSidebar && (
+          <Sidebar
+            selectedId={selectedId}
+            selectedBlock={selectedBlock}
+            currentPage={currentPage}
+            startDay={startDay}
+            isExporting={isExporting}
+            isMobile={isMobile}
+            onToggleLock={toggleLock}
+            onDeleteBlock={deleteBlock}
+            onChangeBackground={changeBackground}
+            onAddBlock={addBlock}
+            onApplyStarter={applyStarter}
+            onSetStartDay={setStartDay}
+            onExportPDF={exportPDF}
+            onAddMonthBundle={addMonthBundle}
+          />
+        );
+      })()}
 
+      {/* Canvas with dynamic scale */}
       <div style={{ 
         flex: 1, 
         display: 'flex', 
         justifyContent: 'center', 
-        alignItems: 'flex-start', 
-        padding: '20px', 
+        alignItems: isMobile ? 'flex-start' : 'center',
+        padding: isMobile ? '10px' : '20px', 
         overflow: 'auto',
-        background: '#e5e7eb'
+        background: '#e5e7eb',
+        position: 'relative'
       }}>
+        {isMobile && (
+          <button
+            onClick={() => setShowLeftSidebar(!showLeftSidebar)}
+            style={{
+              position: 'absolute',
+              top: '10px',
+              left: '10px',
+              zIndex: 1000,
+              padding: '10px 15px',
+              background: '#ffc8b0',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              color: 'white',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              minHeight: '44px',
+              minWidth: '44px'
+            }}
+          >
+            {showLeftSidebar ? '✕' : '☰'} Menu
+          </button>
+        )}
+        
         <div style={{ 
-          width: WIDTH * VIEW_SCALE, 
-          height: HEIGHT * VIEW_SCALE, 
+          width: WIDTH * viewScale, 
+          height: HEIGHT * viewScale, 
           boxShadow: '0 10px 30px rgba(0,0,0,0.2)', 
           background: 'white', 
           borderRadius: '4px',
           overflow: 'hidden'
         }}>
           <div style={{ 
-            transform: `scale(${VIEW_SCALE})`, 
+            transform: `scale(${viewScale})`, 
             transformOrigin: 'top left', 
             width: WIDTH, 
             height: HEIGHT 
@@ -419,7 +464,7 @@ export default function App() {
                     key={block.id}
                     block={block}
                     isSelected={block.id === selectedId}
-                    onSelect={() => setSelectedId(block. id)}
+                    onSelect={() => setSelectedId(block.id)}
                     onChange={updateBlock}
                     onToggleLock={toggleLock}      
                     onDelete={deleteBlock}
@@ -431,17 +476,50 @@ export default function App() {
         </div>
       </div>
 
-      <RightSidebar
-        pages={pages}
-        currentPageIndex={currentPageIndex}
-        onAddBlankPage={addBlankPage}
-        onDuplicatePage={duplicatePage}
-        onClearPage={clearPage}
-        onApplyLayoutToNext={applyLayoutToNext}
-        onMovePage={movePage}
-        onSetCurrentPage={setCurrentPageIndex}
-        onRenamePage={renamePage}
-      />
+      {/* Right Sidebar - collapsible on mobile/tablet */}
+      {(() => {
+        const isDesktop = !isMobile && !isTablet;
+        const shouldShowRightSidebar = isDesktop || showRightSidebar;
+        return shouldShowRightSidebar && (
+          <RightSidebar
+            pages={pages}
+            currentPageIndex={currentPageIndex}
+            isMobile={isMobile}
+            onAddBlankPage={addBlankPage}
+            onDuplicatePage={duplicatePage}
+            onClearPage={clearPage}
+            onApplyLayoutToNext={applyLayoutToNext}
+            onMovePage={movePage}
+            onSetCurrentPage={setCurrentPageIndex}
+            onRenamePage={renamePage}
+          />
+        );
+      })()}
+      
+      {(isMobile || isTablet) && (
+        <button
+          onClick={() => setShowRightSidebar(!showRightSidebar)}
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 1000,
+            padding: '15px 20px',
+            background: '#ffc8b0',
+            border: 'none',
+            borderRadius: '50px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            color: 'white',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            minHeight: '44px',
+            minWidth: '44px'
+          }}
+        >
+          📄 Pages
+        </button>
+      )}
     </div>
   );
 }

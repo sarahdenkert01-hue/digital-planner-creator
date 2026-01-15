@@ -31,21 +31,24 @@ export const MONTH_NAMES = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'au
 export const STYLES = {
   actionBtn: {
     width: '100%',
-    padding: '8px',
+    padding: '12px',  // Increased from 8px for better touch targets
     borderRadius:  '4px',
     border:  '1px solid #ddd',
     cursor: 'pointer',
     fontSize: '11px',
-    background: '#fff'
+    background: '#fff',
+    minHeight: '44px'  // iOS recommended touch target
   },
   smallBtn: {
-    padding: '8px',
+    padding: '12px',  // Increased from 8px for better touch targets
     fontSize: '11px',
     flex: 1,
     cursor: 'pointer',
     background: '#fff',
     border: '1px solid #ddd',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    minHeight: '44px',  // Ensure minimum 44px touch target
+    minWidth: '44px'
   },
   exportBtn: {
     padding:  '14px',
@@ -57,13 +60,14 @@ export const STYLES = {
     width:  '100%',
     cursor:  'pointer',
     marginTop: '10px',
-    fontSize: '12px'
+    fontSize: '12px',
+    minHeight: '44px'  // Touch-friendly
   }
 };
 
 // Style functions
 export const toggleBtn = (isActive) => ({
-  padding: '8px 16px',
+  padding: '12px 16px',  // Increased from 8px for better touch targets
   fontSize: '11px',
   cursor: 'pointer',
   background: isActive ? '#ffc8b0' : '#fff',
@@ -72,7 +76,8 @@ export const toggleBtn = (isActive) => ({
   borderRadius: '4px',
   fontWeight:  isActive ? 'bold' :  'normal',
   flex:  1,
-  transition: 'all 0.2s'
+  transition: 'all 0.2s',
+  minHeight: '44px'
 });
 
 export const moveBtn = {
@@ -94,5 +99,6 @@ export const pageBtn = (active) => ({
   border: 'none',
   fontSize: '11px',
   cursor: 'pointer',
-  transition: 'all 0.2s'
+  transition: 'all 0.2s',
+  minHeight: '44px'
 });
