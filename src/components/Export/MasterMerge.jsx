@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { TAB_CONFIG, GRID_CONFIG, MONTH_NAMES, MONTH_OFFSETS } from '../../constants';
 
+// Heuristic for detecting month pages - adjust based on your planner structure
+// (e.g., 1 month overview + 31 day pages + 1 separator = 33 pages per month)
+const PAGES_PER_MONTH = 33;
+
 export default function MasterMerge() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -20,25 +24,6 @@ export default function MasterMerge() {
       Border: [0, 0, 0],
       Dest: [page.doc.getPages()[targetPageIndex].ref, 'XYZ', null, null, null]
     }));
-  };
-
-  // Helper: Find month pages in merged PDF
-  const findMonthPages = (pages, pdfDoc) => {
-    const monthPages = {};
-    
-    // Heuristic: Assume pages are in order and look for patterns
-    // This is a simplified version - you may need to enhance based on your page structure
-    pages.forEach((pageInfo, index) => {
-      // Try to detect month pages by analyzing page structure
-      // For now, we'll use a simple approach: every 32 pages is a new month
-      // Adjust this logic based on your actual planner structure
-      const monthIndex = Math.floor(index / 32);
-      if (monthIndex < MONTH_NAMES.length && index % 32 === 0) {
-        monthPages[MONTH_NAMES[monthIndex].toUpperCase()] = index;
-      }
-    });
-    
-    return monthPages;
   };
 
   // Helper: Add month tab links to a page
@@ -101,7 +86,6 @@ export default function MasterMerge() {
 
     try {
       const mergedPdf = await PDFDocument.create();
-      const pageMetadata = [];
 
       // PASS 1: Copy all pages
       for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
@@ -113,13 +97,8 @@ export default function MasterMerge() {
         
         const copiedPages = await mergedPdf.copyPages(donorPdf, pageIndices);
         
-        copiedPages.forEach((page, localIndex) => {
+        copiedPages.forEach((page) => {
           mergedPdf.addPage(page);
-          pageMetadata.push({
-            fileIndex,
-            localIndex,
-            globalIndex: pageMetadata.length
-          });
         });
       }
 
@@ -135,10 +114,9 @@ export default function MasterMerge() {
       
       // If you have a consistent structure (e.g., Cover, Month Overview, 31 days, repeat)
       // you can detect month pages. This is a placeholder - adjust to your needs:
-      let pageIndex = 0;
       MONTH_NAMES.forEach((month, monthIdx) => {
         // Example: If each month starts at a predictable interval
-        const estimatedIndex = monthIdx * 33; // adjust based on your structure
+        const estimatedIndex = monthIdx * PAGES_PER_MONTH; // adjust based on your structure
         if (estimatedIndex < totalPages) {
           monthPages[month.toUpperCase()] = estimatedIndex;
         }
