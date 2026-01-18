@@ -9,6 +9,7 @@ import ImageBlock from './components/Canvas/ImageBlock';
 import { createBlock } from './utils/blockHelpers';
 import { CANVAS_CONFIG } from './constants';
 import { useResponsive } from './hooks/useResponsive';
+import { usePDFExport } from './hooks/usePDFExport';
 
 const { WIDTH, HEIGHT } = CANVAS_CONFIG;
 
@@ -28,14 +29,27 @@ export default function App() {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [selectedId, setSelectedId] = useState(null);
   const [startDay, setStartDay] = useState('sunday');
-  const [isExporting, setIsExporting] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [showLeftSidebar, setShowLeftSidebar] = useState(false);
   const [showRightSidebar, setShowRightSidebar] = useState(false);
   
   const { viewScale, isMobile, isTablet } = useResponsive();
   
   const stageRef = useRef();
+  const lastRenderedPageRef = useRef(null);
+
+  const { 
+    exportProgress, 
+    isExporting, 
+    exportSmartPDF, 
+    cancelExport 
+  } = usePDFExport({ 
+    pages, 
+    stageRef, 
+    lastRenderedPageRef, 
+    setCurrentPageIndex, 
+    startDay 
+  });
+
   const currentPage = pages[currentPageIndex] || pages[0];
   const selectedBlock = currentPage?. blocks?.find(b => b. id === selectedId);
   
@@ -243,115 +257,6 @@ export default function App() {
     alert(`Added ${bundle.length} pages for ${month}!`);
   };
 
-  const exportPDF = async () => {
-  setSelectedId(null); // Deselect blocks
-  setIsExporting(true);
-  setProgress(0);
-  
-  // Dynamic import for jsPDF (smaller bundle size)
-  const { default: jsPDF } = await import('jspdf');
-  
-  const pdf = new jsPDF('p', 'pt', [WIDTH, HEIGHT]);
-  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-  
-  try {
-    for (let i = 0; i < pages.length; i++) {
-      // Update progress
-      setProgress(Math.round(((i + 1) / pages.length) * 100));
-      
-      // Switch to this page
-      setCurrentPageIndex(i);
-      
-      // Wait for page to render
-      await new Promise(resolve => setTimeout(resolve, 650));
-      
-      // Capture page as image
-      const dataUrl = stageRef.current.toDataURL({ 
-        pixelRatio: 1.5, 
-        mimeType: 'image/jpeg', 
-        quality: 0.85 
-      });
-      
-      // Add new page to PDF (except first page)
-      if (i > 0) {
-        pdf.addPage([WIDTH, HEIGHT], 'p');
-      }
-      
-      // Add image to PDF
-      pdf.addImage(dataUrl, 'JPEG', 0, 0, WIDTH, HEIGHT, undefined, 'FAST');
-      
-      // Add month tab hyperlinks (on all pages)
-      const { TAB_CONFIG } = await import('./constants/canvasConfig');
-      months.forEach((m, idx) => {
-        const targetPageIdx = pages.findIndex(pg => 
-          (pg.section === m && pg. type === 'MONTH') || 
-          (pg.name. toUpperCase().includes(m) && pg.type !== 'DAY')
-        );
-        if (targetPageIdx !== -1) {
-          pdf.link(
-            TAB_CONFIG. startX, 
-            TAB_CONFIG. startY + (idx * TAB_CONFIG.height), 
-            TAB_CONFIG. width, 
-            TAB_CONFIG.height, 
-            { pageNumber: targetPageIdx + 1 }
-          );
-        }
-      });
-      
-      // Add calendar grid hyperlinks (only on month overview pages)
-      if (pages[i].type === 'MONTH' || pages[i].name.toUpperCase().includes('OVERVIEW')) {
-        const monthName = pages[i].section !== 'NONE' 
-          ? pages[i].section 
-          : months. find(m => pages[i].name.toUpperCase().includes(m));
-        
-        if (monthName) {
-          const { GRID_CONFIG } = await import('./constants/canvasConfig');
-          
-          // Month offsets (first day of month position in calendar grid)
-          const MONTH_OFFSETS = {
-            sunday: { JAN: 4, FEB: 0, MAR: 0, APR: 3, MAY: 5, JUN: 1, JUL: 3, AUG: 6, SEP: 2, OCT: 4, NOV: 0, DEC: 2 },
-            monday: { JAN: 3, FEB: 6, MAR: 6, APR: 2, MAY: 4, JUN: 0, JUL: 2, AUG: 5, SEP: 1, OCT: 3, NOV: 6, DEC: 1 }
-          };
-          
-          const offset = MONTH_OFFSETS[startDay][monthName];
-          const firstDayIdx = pages. findIndex(pg => pg.section === monthName && pg.type === 'DAY');
-          
-          if (firstDayIdx !== -1) {
-            // Add hyperlink for each date in the month
-            for (let d = 0; d < 31; d++) {
-              const slot = d + offset;
-              const col = slot % 7;
-              const row = Math.floor(slot / 7);
-              
-              const x = GRID_CONFIG.startX + (col * GRID_CONFIG.cellWidth);
-              const y = GRID_CONFIG.startY + (row * GRID_CONFIG.cellHeight);
-              
-              pdf.link(
-                x, 
-                y, 
-                GRID_CONFIG. cellWidth, 
-                GRID_CONFIG.cellHeight, 
-                { pageNumber: firstDayIdx + d + 1 }
-              );
-            }
-          }
-        }
-      }
-    }
-    
-    // Save the PDF
-    pdf.save('Therapist_Planner_2026.pdf');
-    alert('✅ PDF exported successfully!');
-    
-  } catch (error) {
-    console.error('Export error:', error);
-    alert('❌ Export failed. Check console for details.');
-  } finally {
-    setIsExporting(false);
-    setProgress(0);
-  }
-};
-
       if (!isUnlocked) {
       return <LicenseCheck onUnlock={() => {
         console.log('🎊 onUnlock called in App.jsx! ');
@@ -369,7 +274,7 @@ export default function App() {
       background: '#f0f2f5', 
       overflow: 'hidden' 
     }}>
-      {isExporting && <ExportProgress progress={progress} onCancel={() => setIsExporting(false)} />}
+      {isExporting && <ExportProgress progress={exportProgress} onCancel={cancelExport} />}
 
       {/* Sidebar - collapsible on mobile */}
       {(() => {
@@ -388,7 +293,7 @@ export default function App() {
             onAddBlock={addBlock}
             onApplyStarter={applyStarter}
             onSetStartDay={setStartDay}
-            onExportPDF={exportPDF}
+            onExportPDF={exportSmartPDF}
             onAddMonthBundle={addMonthBundle}
           />
         );

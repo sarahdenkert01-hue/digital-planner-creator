@@ -24,8 +24,9 @@ export const TAB_CONFIG = {
 // Re-export library items from separate file
 export { LIBRARY_ITEMS } from './libraryItems';
 
-// Month names
+// Month names and offsets
 export const MONTH_NAMES = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+export { MONTH_OFFSETS } from './months';
 
 // Button and component styles
 export const STYLES = {
