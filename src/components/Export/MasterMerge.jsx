@@ -15,38 +15,50 @@ export default function MasterMerge() {
     setProgress(0);
 
     try {
-      // Create new merged PDF
       const mergedPdf = await PDFDocument.create();
-      let totalPageOffset = 0; // Track cumulative page count for link updates
-
+      
+      // Track which source PDF each page came from
+      const pageSourceMap = [];
+      
+      // FIRST PASS: Copy all pages to merged PDF
       for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
-        setProgress(Math.round(((fileIndex + 1) / files.length) * 100));
+        setProgress(Math.round(((fileIndex + 1) / (files.length * 2)) * 100));
 
-        const arrayBuffer = await files[fileIndex]. arrayBuffer();
+        const arrayBuffer = await files[fileIndex].arrayBuffer();
         const donorPdf = await PDFDocument.load(arrayBuffer);
-        const pageCount = donorPdf.getPageCount();
-
-        // Copy all pages from this PDF
-        const copiedPages = await mergedPdf.copyPages(donorPdf, donorPdf.getPageIndices());
+        const pageIndices = donorPdf.getPageIndices();
         
-        // Add each copied page and update its annotations
+        // Copy all pages from this PDF
+        const copiedPages = await mergedPdf.copyPages(donorPdf, pageIndices);
+        
+        // Add pages and track their source
         for (let pageIndex = 0; pageIndex < copiedPages.length; pageIndex++) {
-          const page = copiedPages[pageIndex];
-          mergedPdf.addPage(page);
+          mergedPdf.addPage(copiedPages[pageIndex]);
+          pageSourceMap.push({
+            fileIndex,
+            originalPageIndex: pageIndex,
+            donorPdf
+          });
+        }
+      }
 
-          // Get the original page to access annotations
-          const originalPage = donorPdf.getPage(pageIndex);
-          const annotations = originalPage.node. Annots();
+      // SECOND PASS: Update all hyperlinks now that all pages exist
+      for (let mergedPageIndex = 0; mergedPageIndex < pageSourceMap.length; mergedPageIndex++) {
+        const { donorPdf, originalPageIndex, fileIndex } = pageSourceMap[mergedPageIndex];
+        
+        setProgress(Math.round(50 + ((mergedPageIndex + 1) / pageSourceMap.length) * 50));
+        
+        try {
+          const originalPage = donorPdf.getPage(originalPageIndex);
+          const annotations = originalPage.node.Annots();
 
           if (annotations) {
             const annotArray = annotations.asArray();
             
-            // Process each annotation (link)
             for (let i = 0; i < annotArray.length; i++) {
               const annot = annotArray[i];
               const annotDict = annot.dict;
               
-              // Check if it's a link annotation
               const subtype = annotDict.get(donorPdf.context.obj('Subtype'));
               if (subtype && subtype.toString() === '/Link') {
                 const dest = annotDict.get(donorPdf.context.obj('Dest'));
@@ -58,14 +70,19 @@ export default function MasterMerge() {
                   if (destArray.length > 0) {
                     const targetPageRef = destArray[0];
                     
-                    // Find which page this reference points to
-                    for (let targetIdx = 0; targetIdx < pageCount; targetIdx++) {
+                    // Find the target page in the original PDF
+                    for (let targetIdx = 0; targetIdx < donorPdf.getPageCount(); targetIdx++) {
                       const targetPage = donorPdf.getPage(targetIdx);
                       if (targetPage.ref === targetPageRef) {
-                        // Update the destination to point to the new page number
-                        const newPageIndex = totalPageOffset + targetIdx;
-                        const newPage = mergedPdf.getPage(newPageIndex);
-                        destArray[0] = newPage. ref;
+                        // Find this page in the merged PDF
+                        const targetMergedIndex = pageSourceMap.findIndex(
+                          p => p.fileIndex === fileIndex && p.originalPageIndex === targetIdx
+                        );
+                        
+                        if (targetMergedIndex >= 0) {
+                          const newPage = mergedPdf.getPage(targetMergedIndex);
+                          destArray[0] = newPage.ref;
+                        }
                         break;
                       }
                     }
@@ -82,12 +99,17 @@ export default function MasterMerge() {
                     if (destArray.length > 0) {
                       const targetPageRef = destArray[0];
                       
-                      for (let targetIdx = 0; targetIdx < pageCount; targetIdx++) {
+                      for (let targetIdx = 0; targetIdx < donorPdf.getPageCount(); targetIdx++) {
                         const targetPage = donorPdf.getPage(targetIdx);
                         if (targetPage.ref === targetPageRef) {
-                          const newPageIndex = totalPageOffset + targetIdx;
-                          const newPage = mergedPdf.getPage(newPageIndex);
-                          destArray[0] = newPage.ref;
+                          const targetMergedIndex = pageSourceMap.findIndex(
+                            p => p.fileIndex === fileIndex && p.originalPageIndex === targetIdx
+                          );
+                          
+                          if (targetMergedIndex >= 0) {
+                            const newPage = mergedPdf.getPage(targetMergedIndex);
+                            destArray[0] = newPage.ref;
+                          }
                           break;
                         }
                       }
@@ -97,24 +119,26 @@ export default function MasterMerge() {
               }
             }
           }
+        } catch (annotError) {
+          // Skip this page's annotations if there's an error
+          console.warn(`Could not process annotations for page ${mergedPageIndex}:`, annotError);
         }
-
-        totalPageOffset += pageCount;
       }
 
       // Save the merged PDF
+      setProgress(100);
       const pdfBytes = await mergedPdf.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'Complete_Planner_2026_Merged.pdf';
-      link. click();
+      link.click();
 
       alert('✅ Success! Your complete planner with working hyperlinks is ready.');
 
     } catch (error) {
       console.error('Merge error:', error);
-      alert('❌ Merge failed:  ' + error.message);
+      alert('❌ Merge failed: ' + error.message);
     } finally {
       setIsProcessing(false);
       setProgress(0);
