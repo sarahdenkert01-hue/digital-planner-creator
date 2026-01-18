@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { PDFDocument, rgb } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib';
 import { TAB_CONFIG, GRID_CONFIG, MONTH_NAMES, MONTH_OFFSETS } from '../../constants';
 
 // Heuristic for detecting month pages - adjust based on your planner structure
 // (e.g., 1 month overview + 31 day pages + 1 separator = 33 pages per month)
 const PAGES_PER_MONTH = 33;
+
+// Calendar year for date calculations
+const CALENDAR_YEAR = 2026;
 
 export default function MasterMerge() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -50,9 +53,8 @@ export default function MasterMerge() {
     
     if (monthOffset === undefined) return;
     
-    const year = 2026;
-    const firstDay = new Date(year, monthOffset, 1).getDay();
-    const daysInMonth = new Date(year, monthOffset + 1, 0).getDate();
+    const firstDay = new Date(CALENDAR_YEAR, monthOffset, 1).getDay();
+    const daysInMonth = new Date(CALENDAR_YEAR, monthOffset + 1, 0).getDate();
     const offset = startDay === "monday" ? (firstDay === 0 ? 6 : firstDay - 1) : firstDay;
     
     for (let day = 1; day <= daysInMonth; day++) {
@@ -140,8 +142,14 @@ export default function MasterMerge() {
             const monthName = Object.keys(monthPages).find(key => monthPages[key] === i);
             if (monthName) {
               // Calculate day pages (assumes days follow month page)
+              // Use actual days in month to avoid creating invalid links
+              const monthOffset = MONTH_OFFSETS[monthName.toLowerCase()];
+              const daysInMonth = monthOffset !== undefined 
+                ? new Date(CALENDAR_YEAR, monthOffset + 1, 0).getDate()
+                : 31;
+              
               const dayPages = [];
-              for (let day = 0; day < 31; day++) {
+              for (let day = 0; day < daysInMonth; day++) {
                 const dayPageIndex = i + 1 + day;
                 if (dayPageIndex < totalPages) {
                   dayPages.push(dayPageIndex);
