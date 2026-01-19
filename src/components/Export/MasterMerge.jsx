@@ -2,78 +2,58 @@ import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { TAB_CONFIG, GRID_CONFIG, MONTH_NAMES, MONTH_OFFSETS } from '../../constants';
 
-// Heuristic for detecting month pages - adjust based on your planner structure
-// (e.g., 1 month overview + 31 day pages + 1 separator = 33 pages per month)
-const PAGES_PER_MONTH = 33;
-
-// Calendar year for date calculations
 const CALENDAR_YEAR = 2026;
 
 export default function MasterMerge() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // Helper: Create internal link annotation
-  const createInternalLink = (page, x, y, width, height, targetPageIndex) => {
-    const pageHeight = page.getHeight();
-    
-    // PDF coordinates start from bottom-left, we need to flip Y
-    const pdfY = pageHeight - y - height;
-    
-    page.node.addAnnot(page.doc.context.obj({
-      Type: 'Annot',
-      Subtype: 'Link',
-      Rect: [x, pdfY, x + width, pdfY + height],
-      Border: [0, 0, 0],
-      Dest: [page.doc.getPages()[targetPageIndex].ref, 'XYZ', null, null, null]
-    }));
+  // Extract metadata from PDF properties
+  const extractMetadata = async (pdfDoc) => {
+    try {
+      const subject = pdfDoc.getSubject();
+      if (subject && subject.startsWith('METADATA:')) {
+        const jsonStr = subject.substring(9);
+        return JSON.parse(jsonStr);
+      }
+    } catch (err) {
+      console.warn('Could not extract metadata:', err);
+    }
+    return null;
   };
 
-  // Helper: Add month tab links to a page
-  const addMonthTabLinks = (page, pageIndex, monthPages, totalPages) => {
-    const { startX, startY, width, height } = TAB_CONFIG;
-    
-    MONTH_NAMES.forEach((month, idx) => {
-      const targetPageIndex = monthPages[month.toUpperCase()];
-      if (targetPageIndex !== undefined && targetPageIndex !== pageIndex && targetPageIndex < totalPages) {
-        const y = startY + (idx * height);
-        try {
-          createInternalLink(page, startX, y, width, height, targetPageIndex);
-        } catch (err) {
-          console.warn(`Failed to create link for ${month}:`, err);
-        }
+  // Create internal link annotation using pdf-lib
+  const createInternalLink = (page, x, y, width, height, targetPageIndex, pdfDoc) => {
+    try {
+      const pageHeight = page.getHeight();
+      const pdfY = pageHeight - y - height;
+      
+      const pages = pdfDoc.getPages();
+      const targetPage = pages[targetPageIndex];
+      
+      if (!targetPage) {
+        console.warn(`Target page ${targetPageIndex} does not exist`);
+        return;
       }
-    });
-  };
 
-  // Helper: Add calendar grid links
-  const addCalendarGridLinks = (page, pageIndex, monthName, startDay, dayPages, totalPages) => {
-    const { startX, startY, cellWidth, cellHeight, rows, cols } = GRID_CONFIG;
-    const monthOffset = MONTH_OFFSETS[monthName.toLowerCase()];
-    
-    if (monthOffset === undefined) return;
-    
-    const firstDay = new Date(CALENDAR_YEAR, monthOffset, 1).getDay();
-    const daysInMonth = new Date(CALENDAR_YEAR, monthOffset + 1, 0).getDate();
-    const offset = startDay === "monday" ? (firstDay === 0 ? 6 : firstDay - 1) : firstDay;
-    
-    for (let day = 1; day <= daysInMonth; day++) {
-      const cellIndex = offset + day - 1;
-      const row = Math.floor(cellIndex / cols);
-      const col = cellIndex % cols;
-      
-      if (row >= rows) break;
-      
-      const targetPageIndex = dayPages[day - 1];
-      if (targetPageIndex !== undefined && targetPageIndex !== pageIndex && targetPageIndex < totalPages) {
-        const x = startX + (col * cellWidth);
-        const y = startY + (row * cellHeight);
-        try {
-          createInternalLink(page, x, y, cellWidth, cellHeight, targetPageIndex);
-        } catch (err) {
-          console.warn(`Failed to create calendar link for day ${day}:`, err);
-        }
-      }
+      page.node.addAnnot(
+        pdfDoc.context.register(
+          pdfDoc.context.obj({
+            Type: 'Annot',
+            Subtype: 'Link',
+            Rect: [x, pdfY, x + width, pdfY + height],
+            Border: [0, 0, 0],
+            C: [0, 0, 0],
+            A: {
+              Type: 'Action',
+              S: 'GoTo',
+              D: [targetPage.ref, 'XYZ', null, null, 0]
+            }
+          })
+        )
+      );
+    } catch (err) {
+      console.warn('Failed to create link:', err);
     }
   };
 
@@ -88,78 +68,170 @@ export default function MasterMerge() {
 
     try {
       const mergedPdf = await PDFDocument.create();
+      const allPageMetadata = [];
+      let hasMetadata = false;
 
-      // PASS 1: Copy all pages
+      // PASS 1: Load PDFs, extract metadata, and copy pages
+      let globalPageIndex = 0;
       for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
-        setProgress(Math.round(((fileIndex + 1) / (files.length * 2)) * 50));
+        setProgress(Math.round(((fileIndex + 1) / files.length) * 40));
 
         const arrayBuffer = await files[fileIndex].arrayBuffer();
         const donorPdf = await PDFDocument.load(arrayBuffer);
-        const pageIndices = donorPdf.getPageIndices();
         
+        // Extract metadata
+        const metadata = await extractMetadata(donorPdf);
+        
+        if (metadata && metadata.pageStructure) {
+          hasMetadata = true;
+          console.log(`File ${fileIndex + 1}: Found metadata for ${metadata.pageStructure.length} pages`);
+        }
+
+        // Copy all pages
+        const pageIndices = donorPdf.getPageIndices();
         const copiedPages = await mergedPdf.copyPages(donorPdf, pageIndices);
         
-        copiedPages.forEach((page) => {
+        copiedPages.forEach((page, localIndex) => {
           mergedPdf.addPage(page);
+          
+          // Store metadata for this page
+          if (metadata && metadata.pageStructure && metadata.pageStructure[localIndex]) {
+            allPageMetadata.push({
+              ...metadata.pageStructure[localIndex],
+              globalIndex: globalPageIndex,
+              fileIndex
+            });
+          } else {
+            allPageMetadata.push({
+              globalIndex: globalPageIndex,
+              type: null,
+              name: null,
+              fileIndex
+            });
+          }
+          
+          globalPageIndex++;
         });
       }
 
-      // PASS 2: Recreate hyperlinks
-      // Note: This is a simplified version. You may need to enhance this
-      // based on your actual planner structure and page naming conventions
+      if (!hasMetadata) {
+        console.warn('No metadata found in any PDF. Links may not work correctly.');
+        alert('⚠️ Warning: PDFs were exported with an older version. Hyperlinks may not work correctly.\n\nPlease re-export your batches for full functionality.');
+      }
+
+      // PASS 2: Build lookup tables
+      setProgress(50);
       
-      const pages = mergedPdf.getPages();
-      const totalPages = pages.length;
-      
-      // Simple heuristic: Find month pages (adjust based on your structure)
       const monthPages = {};
+      const dayPagesByMonth = {};
       
-      // If you have a consistent structure (e.g., Cover, Month Overview, 31 days, repeat)
-      // you can detect month pages. This is a placeholder - adjust to your needs:
-      MONTH_NAMES.forEach((month, monthIdx) => {
-        // Example: If each month starts at a predictable interval
-        const estimatedIndex = monthIdx * PAGES_PER_MONTH; // adjust based on your structure
-        if (estimatedIndex < totalPages) {
-          monthPages[month.toUpperCase()] = estimatedIndex;
+      allPageMetadata.forEach((meta) => {
+        if (!meta.type || !meta.name) return;
+        
+        // Find month overview pages
+        if (meta.type === 'MONTH') {
+          const monthMatch = meta.name.match(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i);
+          if (monthMatch) {
+            const monthName = monthMatch[0].toUpperCase();
+            monthPages[monthName] = meta.globalIndex;
+            console.log(`Found ${monthName} overview at page ${meta.globalIndex}`);
+          }
+        }
+        
+        // Find day pages
+        if (meta.type === 'DAY') {
+          const monthMatch = meta.name.match(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i);
+          const dayMatch = meta.name.match(/\b(\d+)\b/);
+          
+          if (monthMatch && dayMatch) {
+            const monthName = monthMatch[0].toUpperCase();
+            const dayNum = parseInt(dayMatch[0]);
+            
+            if (!dayPagesByMonth[monthName]) {
+              dayPagesByMonth[monthName] = [];
+            }
+            
+            dayPagesByMonth[monthName][dayNum - 1] = meta.globalIndex;
+          }
         }
       });
 
-      // Add links to all pages
+      console.log('Month pages:', monthPages);
+      console.log('Day pages by month:', dayPagesByMonth);
+
+      // PASS 3: Add hyperlinks
+      const pages = mergedPdf.getPages();
+      const totalPages = pages.length;
+      
       for (let i = 0; i < totalPages; i++) {
         setProgress(50 + Math.round(((i + 1) / totalPages) * 50));
         
-        try {
-          const page = pages[i];
-          
-          // Add month tab links to every page
-          addMonthTabLinks(page, i, monthPages, totalPages);
-          
-          // If this is a month overview page, add calendar grid links
-          // (You'll need to detect which pages are month overviews)
-          // For now, assume month overview pages are the month pages we found
-          const isMonthPage = Object.values(monthPages).includes(i);
-          if (isMonthPage) {
-            const monthName = Object.keys(monthPages).find(key => monthPages[key] === i);
-            if (monthName) {
-              // Calculate day pages (assumes days follow month page)
-              // Use actual days in month to avoid creating invalid links
-              const monthOffset = MONTH_OFFSETS[monthName.toLowerCase()];
-              const daysInMonth = monthOffset !== undefined 
-                ? new Date(CALENDAR_YEAR, monthOffset + 1, 0).getDate()
-                : 31;
+        const page = pages[i];
+        const pageMeta = allPageMetadata[i];
+        
+        // Add month tab links to every page
+        MONTH_NAMES.forEach((month, idx) => {
+          const targetPageIndex = monthPages[month.toUpperCase()];
+          // Skip if target doesn't exist or is the current page (avoid self-links)
+          if (targetPageIndex !== undefined && targetPageIndex !== i) {
+            const y = TAB_CONFIG.startY + (idx * TAB_CONFIG.height);
+            createInternalLink(
+              page,
+              TAB_CONFIG.startX,
+              y,
+              TAB_CONFIG.width,
+              TAB_CONFIG.height,
+              targetPageIndex,
+              mergedPdf
+            );
+          }
+        });
+        
+        // If this is a month overview page, add calendar grid links
+        if (pageMeta && pageMeta.type === 'MONTH') {
+          const monthMatch = pageMeta.name.match(/(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)/i);
+          if (monthMatch) {
+            const monthName = monthMatch[0].toUpperCase();
+            const dayPages = dayPagesByMonth[monthName] || [];
+            
+            console.log(`Adding calendar links for ${monthName} at page ${i}, ${dayPages.filter(p => p !== undefined).length} day links`);
+            
+            // Calculate calendar grid layout
+            const monthOffset = MONTH_OFFSETS[monthName.toLowerCase()];
+            if (monthOffset !== undefined) {
+              const firstDay = new Date(CALENDAR_YEAR, monthOffset, 1).getDay();
+              const daysInMonth = new Date(CALENDAR_YEAR, monthOffset + 1, 0).getDate();
               
-              const dayPages = [];
-              for (let day = 0; day < daysInMonth; day++) {
-                const dayPageIndex = i + 1 + day;
-                if (dayPageIndex < totalPages) {
-                  dayPages.push(dayPageIndex);
+              // Assume sunday start (adjust if needed)
+              const startDay = "sunday";
+              const offset = startDay === "monday" ? (firstDay === 0 ? 6 : firstDay - 1) : firstDay;
+              
+              for (let day = 1; day <= daysInMonth; day++) {
+                const cellIndex = offset + day - 1;
+                const row = Math.floor(cellIndex / GRID_CONFIG.cols);
+                const col = cellIndex % GRID_CONFIG.cols;
+                
+                if (row >= GRID_CONFIG.rows) break;
+                
+                const targetPageIndex = dayPages[day - 1];
+                // Skip if target doesn't exist or is the current page (avoid self-links)
+                if (targetPageIndex !== undefined && targetPageIndex !== i) {
+                  const x = GRID_CONFIG.startX + (col * GRID_CONFIG.cellWidth);
+                  const y = GRID_CONFIG.startY + (row * GRID_CONFIG.cellHeight);
+                  
+                  createInternalLink(
+                    page,
+                    x,
+                    y,
+                    GRID_CONFIG.cellWidth,
+                    GRID_CONFIG.cellHeight,
+                    targetPageIndex,
+                    mergedPdf
+                  );
                 }
               }
-              addCalendarGridLinks(page, i, monthName, "sunday", dayPages, totalPages);
             }
           }
-        } catch (pageError) {
-          console.warn(`Failed to add links to page ${i}:`, pageError);
         }
       }
 
@@ -215,7 +287,7 @@ export default function MasterMerge() {
           marginBottom: '10px',
           padding: '8px',
           background: '#dcfce7',
-          borderRadius:  '6px'
+          borderRadius: '6px'
         }}>
           <div style={{
             fontSize: '12px',
@@ -223,7 +295,7 @@ export default function MasterMerge() {
             fontWeight: 'bold',
             marginBottom: '5px'
           }}>
-            {progress < 50 ? 'Merging pages...' : 'Recreating hyperlinks...'} {progress}%
+            {progress < 40 ? 'Loading PDFs...' : progress < 50 ? 'Analyzing structure...' : 'Creating links...'} {progress}%
           </div>
           <div style={{
             width: '100%',
@@ -236,7 +308,7 @@ export default function MasterMerge() {
               width: `${progress}%`,
               height: '100%',
               background: '#22c55e',
-              transition:  'width 0.3s'
+              transition: 'width 0.3s'
             }} />
           </div>
         </div>
@@ -271,7 +343,7 @@ export default function MasterMerge() {
         marginTop: '8px',
         marginBottom: '0'
       }}>
-        💡 Tip: Select multiple PDFs in order (Jan-Jun, Jul-Dec, etc.)
+        💡 Tip: Re-export batches with latest version, then merge in order
       </p>
     </div>
   );
