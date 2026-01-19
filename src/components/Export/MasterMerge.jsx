@@ -172,6 +172,7 @@ export default function MasterMerge() {
         // Add month tab links to every page
         MONTH_NAMES.forEach((month, idx) => {
           const targetPageIndex = monthPages[month.toUpperCase()];
+          // Skip if target doesn't exist or is the current page (avoid self-links)
           if (targetPageIndex !== undefined && targetPageIndex !== i) {
             const y = TAB_CONFIG.startY + (idx * TAB_CONFIG.height);
             createInternalLink(
@@ -213,6 +214,7 @@ export default function MasterMerge() {
                 if (row >= GRID_CONFIG.rows) break;
                 
                 const targetPageIndex = dayPages[day - 1];
+                // Skip if target doesn't exist or is the current page (avoid self-links)
                 if (targetPageIndex !== undefined && targetPageIndex !== i) {
                   const x = GRID_CONFIG.startX + (col * GRID_CONFIG.cellWidth);
                   const y = GRID_CONFIG.startY + (row * GRID_CONFIG.cellHeight);
