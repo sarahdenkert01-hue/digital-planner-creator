@@ -94,7 +94,26 @@ export function usePDFExport({ pages, stageRef, lastRenderedPageRef, setCurrentP
         setExportProgress(Math.round(((index + 1) / pages.length) * 100));
       }
 
-      if (!  exportCancelRef.current) {
+      if (!exportCancelRef.current) {
+        // Add metadata to PDF document properties
+        const metadata = {
+          creator: 'Digital Planner Creator',
+          version: '2.0',
+          pageStructure: pages.map((p, idx) => ({
+            index: idx,
+            type: p.type,
+            name: p.name
+          }))
+        };
+        
+        // Store in PDF subject field (we'll parse this during merge)
+        pdf.setProperties({
+          title: 'Therapist Planner Batch',
+          subject: `METADATA:${JSON.stringify(metadata)}`,
+          creator: 'Digital Planner Creator',
+          keywords: 'planner, therapist, digital'
+        });
+        
         pdf.save("Therapist_Planner_Batch.pdf");
         alert("✅ Export complete! PDF ready to download.");
       }
